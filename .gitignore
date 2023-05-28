@@ -46,3 +46,5 @@ msbuild.wrn
 appsettings.json
 appsettings.*.json
 !appsettings.Example.json
+
+# remove run folder from github
