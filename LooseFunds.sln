@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B09F441A-84EE-4504-88D6-5FE3042468FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{08F49F00-6E1A-44D9-8EE6-4D75400844C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "platforms", "platforms", "{7D33F3C2-102E-4D6A-892D-E7D0BFC3BB12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kraken", "kraken", "{52FEE7F1-EA3B-419A-B13A-BC7392F1ACED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Shared.Platforms.Kraken", "src\shared\platforms\kraken\LooseFunds.Shared.Platforms.Kraken\LooseFunds.Shared.Platforms.Kraken.csproj", "{0AD1BF9E-71B1-4588-A521-0F23A74EB478}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "investor", "investor", "{8DEA0986-602B-4188-A37C-1570BA873F2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "toolbox", "toolbox", "{D89A0957-07C2-44FF-BBB0-918C215F63A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Shared.Toolbox", "src\shared\toolbox\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj", "{A07FEAF5-14B1-4644-A495-B49362F657FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor", "src\investor\LooseFunds.Investor\LooseFunds.Investor.csproj", "{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AD1BF9E-71B1-4588-A521-0F23A74EB478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AD1BF9E-71B1-4588-A521-0F23A74EB478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AD1BF9E-71B1-4588-A521-0F23A74EB478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AD1BF9E-71B1-4588-A521-0F23A74EB478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A07FEAF5-14B1-4644-A495-B49362F657FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A07FEAF5-14B1-4644-A495-B49362F657FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A07FEAF5-14B1-4644-A495-B49362F657FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A07FEAF5-14B1-4644-A495-B49362F657FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{08F49F00-6E1A-44D9-8EE6-4D75400844C3} = {B09F441A-84EE-4504-88D6-5FE3042468FF}
+		{7D33F3C2-102E-4D6A-892D-E7D0BFC3BB12} = {08F49F00-6E1A-44D9-8EE6-4D75400844C3}
+		{52FEE7F1-EA3B-419A-B13A-BC7392F1ACED} = {7D33F3C2-102E-4D6A-892D-E7D0BFC3BB12}
+		{0AD1BF9E-71B1-4588-A521-0F23A74EB478} = {52FEE7F1-EA3B-419A-B13A-BC7392F1ACED}
+		{8DEA0986-602B-4188-A37C-1570BA873F2F} = {B09F441A-84EE-4504-88D6-5FE3042468FF}
+		{D89A0957-07C2-44FF-BBB0-918C215F63A6} = {08F49F00-6E1A-44D9-8EE6-4D75400844C3}
+		{A07FEAF5-14B1-4644-A495-B49362F657FC} = {D89A0957-07C2-44FF-BBB0-918C215F63A6}
+		{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2} = {8DEA0986-602B-4188-A37C-1570BA873F2F}
+	EndGlobalSection
+EndGlobal
