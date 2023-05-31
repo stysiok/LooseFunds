@@ -1,5 +1,6 @@
 using LooseFunds.Shared.Platforms.Kraken;
 using LooseFunds.Shared.Platforms.Kraken.Services;
+using LooseFunds.Shared.Toolbox.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddKraken(builder.Configuration);
 
+builder.Host.UseLogging(builder.Configuration);
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -26,6 +28,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
 
 app.MapGet("/", async (IMarketDataService marketDataService, CancellationToken cancellationToken) =>
 {
