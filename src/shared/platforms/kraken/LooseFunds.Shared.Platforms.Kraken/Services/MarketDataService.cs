@@ -12,9 +12,6 @@ internal sealed class MarketDataService : IMarketDataService
         _client = client;
     }
 
-    public async Task<GetTime> GetTimeAsync(CancellationToken cancellationToken)
-    {
-        var response = await _client.SendAsync<Models.Requests.GetTime, GetTime>(new(), cancellationToken);
-        return response;
-    }
+    public Task<GetTime> GetTimeAsync(CancellationToken cancellationToken)
+        => _client.SendAsync<Models.Requests.GetTime, GetTime>(new(), cancellationToken);
 }

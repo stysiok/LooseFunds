@@ -8,13 +8,11 @@ namespace LooseFunds.Shared.Platforms.Kraken.Utils;
 
 internal sealed class PrivateRequestSigner : IPrivateRequestSigner
 {
-    private readonly KrakenCredentials _credentials;
-    private readonly KrakenOptions _options;
+    private readonly string _secret;
 
-    public PrivateRequestSigner(IOptions<KrakenCredentials> credentials, IOptions<KrakenOptions> options)
+    public PrivateRequestSigner(IOptions<KrakenCredentials> credentials)
     {
-        _credentials = credentials.Value; 
-        _options = options.Value;
+        _secret = credentials.Value.Secret!;
     }
 
     public string CreateSignature<T>(T request) where T : PrivateKrakenRequest
@@ -22,9 +20,9 @@ internal sealed class PrivateRequestSigner : IPrivateRequestSigner
         using var sha256 = SHA256.Create();
         var inlineParams = request.ToInlineParams();
         var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes($"{request.Nonce.ToString()}{inlineParams}"));
-            
-        using var hmac = new HMACSHA512(Convert.FromBase64String(_credentials.Secret!));
-        var path = $"{_options.Url}{request.Pathname}";
+
+        using var hmac = new HMACSHA512(Convert.FromBase64String(_secret));
+        var path = $"/0/{request.Pathname}";
         var hmacDigest = hmac.ComputeHash(Encoding.UTF8.GetBytes(path).Concat(hash).ToArray());
 
         return Convert.ToBase64String(hmacDigest);

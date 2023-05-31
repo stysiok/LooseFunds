@@ -33,4 +33,10 @@ app.MapGet("/", async (IMarketDataService marketDataService, CancellationToken c
     return result.Date;
 });
 
+app.MapGet("/verify", async (IUserDataService userDataService, CancellationToken cancellationToken) =>
+{
+    var result = await userDataService.GetAccountBalanceAsync(cancellationToken);
+    return result;
+});
+
 app.Run();

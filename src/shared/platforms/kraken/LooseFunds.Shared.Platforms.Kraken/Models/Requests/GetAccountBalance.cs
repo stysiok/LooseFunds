@@ -2,7 +2,7 @@ using LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests;
 
-internal sealed record GetTime : PublicKrakenRequest
+internal sealed record GetAccountBalance : PrivateKrakenRequest
 {
-    public override string Pathname => $"{base.Pathname}Time";
+    public override string Pathname => $"{base.Pathname}Balance";
 }

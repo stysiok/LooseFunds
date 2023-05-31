@@ -21,6 +21,7 @@ public static class ServiceCollectionExtensions
             .Configure<KrakenOptions>(krakenConfigurationSection)
             .AddSingleton<IPrivateRequestSigner, PrivateRequestSigner>()
             .AddScoped<IMarketDataService, MarketDataService>()
+            .AddScoped<IUserDataService, UserDataService>()
             .AddHttpClient<IKrakenHttpClient, KrakenHttpClient>();
     }
 

@@ -1,17 +1,16 @@
+using LooseFunds.Shared.Platforms.Kraken.Utils;
 using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
 
-internal class PrivateKrakenRequest : KrakenRequest
+internal record PrivateKrakenRequest : KrakenRequest
 {
-    [JsonProperty("nonce")]
-    public long Nonce { get; private init; }
+    [JsonProperty("nonce")] 
+    public long Nonce { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); 
 
-    public PrivateKrakenRequest()
-    {
-        Nonce = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-    }
-    
+    [InlineParamsIgnore]
     public override HttpMethod HttpMethod => HttpMethod.Post;
+    
+    [InlineParamsIgnore]
     public override string Pathname => "private/";
 }

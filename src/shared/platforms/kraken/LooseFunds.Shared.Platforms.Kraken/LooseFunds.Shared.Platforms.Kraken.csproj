@@ -7,6 +7,10 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <InternalsVisibleTo Include="LooseFunds.Shared.Platforms.Kraken.Tests" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.5.2" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />

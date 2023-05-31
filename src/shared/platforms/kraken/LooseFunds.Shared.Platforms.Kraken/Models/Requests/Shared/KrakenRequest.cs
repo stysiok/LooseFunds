@@ -2,11 +2,11 @@ using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
 
-internal abstract class KrakenRequest
+internal abstract record KrakenRequest
 {
-    [JsonIgnore] 
+    [JsonIgnore]
     public abstract HttpMethod HttpMethod { get; }
-    
-    [JsonIgnore] 
+
+    [JsonIgnore]
     public abstract string Pathname { get; }
 }
