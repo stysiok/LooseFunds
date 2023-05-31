@@ -2,6 +2,7 @@ using FluentAssertions;
 using LooseFunds.Shared.Platforms.Kraken.Models.Requests;
 using LooseFunds.Shared.Platforms.Kraken.Settings;
 using LooseFunds.Shared.Platforms.Kraken.Utils;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
@@ -21,7 +22,7 @@ public class PrivateRequestSignerTests
             Secret = "kQH5HW/8p1uGOVjbgWA7FunAmGO8lsSUXNsu3eow76sz84Q18fWxnyRzBHCd3pd5nE9qa99HAZtuZuj6F1huXg=="
         });
 
-        _privateRequestSigner = new PrivateRequestSigner(credentials);
+        _privateRequestSigner = new PrivateRequestSigner(credentials, NullLogger<PrivateRequestSigner>.Instance);
     }
 
     [Test]

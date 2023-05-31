@@ -6,5 +6,5 @@ namespace LooseFunds.Shared.Platforms.Kraken.Clients;
 internal interface IKrakenHttpClient
 {
     Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken) 
-        where TRequest : KrakenRequest where TResponse : IKrakenResponse;
+        where TRequest : KrakenRequest;
 }

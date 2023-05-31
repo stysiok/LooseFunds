@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Responses;
 
-public sealed class GetTime : IKrakenResponse
+public sealed class GetTime
 {
     [JsonProperty("unixtime")] public long? Timestamp { get; set; }
 
