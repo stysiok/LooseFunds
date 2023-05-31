@@ -1,4 +1,3 @@
-using LooseFunds.Shared.Platforms.Kraken.Models.Responses.Shared;
 using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Responses;
