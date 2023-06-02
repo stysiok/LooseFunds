@@ -1,5 +1,6 @@
 using LooseFunds.Shared.Platforms.Kraken;
 using LooseFunds.Shared.Platforms.Kraken.Services;
+using LooseFunds.Shared.Toolbox.Correlation;
 using LooseFunds.Shared.Toolbox.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddKraken(builder.Configuration);
+builder.Services.AddCorrelationLogEnricher();
 
 builder.Host.UseLogging(builder.Configuration);
 
@@ -28,6 +30,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+app.UseCorrelationId();
 
 
 app.MapGet("/", async (IMarketDataService marketDataService, CancellationToken cancellationToken) =>
