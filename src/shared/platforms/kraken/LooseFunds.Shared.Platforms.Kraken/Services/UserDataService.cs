@@ -13,5 +13,5 @@ internal sealed class UserDataService : IUserDataService
     }
     
     public Task<GetAccountBalance> GetAccountBalanceAsync(CancellationToken cancellationToken)
-        => _krakenHttpClient.SendAsync<Models.Requests.GetAccountBalance, GetAccountBalance>(new(), cancellationToken);
+        => _krakenHttpClient.PostAsync<Models.Requests.GetAccountBalance, GetAccountBalance>(new(), cancellationToken);
 }

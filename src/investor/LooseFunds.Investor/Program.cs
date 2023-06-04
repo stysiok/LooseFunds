@@ -1,4 +1,5 @@
 using LooseFunds.Shared.Platforms.Kraken;
+using LooseFunds.Shared.Platforms.Kraken.Models.Common;
 using LooseFunds.Shared.Platforms.Kraken.Services;
 using LooseFunds.Shared.Toolbox.Correlation;
 using LooseFunds.Shared.Toolbox.Logging;
@@ -42,6 +43,12 @@ app.MapGet("/", async (IMarketDataService marketDataService, CancellationToken c
 app.MapGet("/verify", async (IUserDataService userDataService, CancellationToken cancellationToken) =>
 {
     var result = await userDataService.GetAccountBalanceAsync(cancellationToken);
+    return result;
+});
+
+app.MapGet("/assets", async (IMarketDataService marketDataService, CancellationToken cancellationToken) =>
+{
+    var result = await marketDataService.GetAssetInfoAsync(new List<Asset> { Asset.XBT, Asset.ETH }, cancellationToken);
     return result;
 });
 
