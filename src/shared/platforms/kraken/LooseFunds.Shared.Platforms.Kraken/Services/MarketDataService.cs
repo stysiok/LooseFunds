@@ -13,12 +13,12 @@ internal sealed class MarketDataService : IMarketDataService
         _client = client;
     }
 
-    public Task<GetTime> GetTimeAsync(CancellationToken cancellationToken)
-        => _client.GetAsync<Models.Requests.GetTime, GetTime>(new(), cancellationToken);
+    public Task<Time> GetTimeAsync(CancellationToken cancellationToken)
+        => _client.GetAsync<Models.Requests.GetTime, Time>(new(), cancellationToken);
 
-    public Task<IReadOnlyDictionary<string, GetAssetInfo>> GetAssetInfoAsync(IList<Asset> assets,
+    public Task<IReadOnlyDictionary<string, AssetInfo>> GetAssetInfoAsync(IList<Asset> assets,
         CancellationToken cancellationToken)
-        => _client.GetAsync<Models.Requests.GetAssetInfo, IReadOnlyDictionary<string, GetAssetInfo>>(
+        => _client.GetAsync<Models.Requests.GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(
             new(new Assets(assets)), cancellationToken);
 
 }

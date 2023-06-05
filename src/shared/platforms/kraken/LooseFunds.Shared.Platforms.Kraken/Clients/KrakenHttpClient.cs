@@ -12,19 +12,20 @@ namespace LooseFunds.Shared.Platforms.Kraken.Clients;
 
 internal sealed class KrakenHttpClient : IKrakenHttpClient
 {
-    private const string ApiSign = "API-Sign";
+    private const string ApiSign = "API-Sign", ApiKey = "API-Key";
     private readonly IPrivateRequestSigner _signer;
     private readonly ILogger<KrakenHttpClient> _logger;
     private readonly HttpClient _client;
 
     public KrakenHttpClient(HttpClient client, IPrivateRequestSigner signer, IOptions<KrakenOptions> options,
-        ILogger<KrakenHttpClient> logger)
+        IOptions<KrakenCredentials> credentials, ILogger<KrakenHttpClient> logger)
     {
         _client = client;
         _signer = signer;
         _logger = logger;
 
-        _client.BaseAddress = new Uri(options.Value.Url!);       
+        _client.BaseAddress = new Uri(options.Value.Url!);
+        _client.DefaultRequestHeaders.Add(ApiKey, credentials.Value.Key);
     }
 
     public async Task<TResponse> PostAsync<TRequest, TResponse>(TRequest request, 

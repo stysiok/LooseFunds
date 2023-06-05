@@ -1,5 +1,4 @@
 using LooseFunds.Shared.Platforms.Kraken.Clients;
-using LooseFunds.Shared.Platforms.Kraken.Models.Responses;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Services;
 
@@ -12,6 +11,7 @@ internal sealed class UserDataService : IUserDataService
         _krakenHttpClient = krakenHttpClient;
     }
     
-    public Task<GetAccountBalance> GetAccountBalanceAsync(CancellationToken cancellationToken)
-        => _krakenHttpClient.PostAsync<Models.Requests.GetAccountBalance, GetAccountBalance>(new(), cancellationToken);
+    public Task<IReadOnlyDictionary<string, decimal>> GetAccountBalanceAsync(CancellationToken cancellationToken)
+        => _krakenHttpClient.PostAsync<Models.Requests.GetAccountBalance, IReadOnlyDictionary<string, decimal>>(new(),
+            cancellationToken);
 }

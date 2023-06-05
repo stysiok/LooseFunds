@@ -5,7 +5,7 @@ namespace LooseFunds.Shared.Platforms.Kraken.Services;
 
 public interface IMarketDataService
 {
-    Task<GetTime> GetTimeAsync(CancellationToken cancellationToken);
-    Task<IReadOnlyDictionary<string, GetAssetInfo>> GetAssetInfoAsync(IList<Asset> assets,
+    Task<Time> GetTimeAsync(CancellationToken cancellationToken);
+    Task<IReadOnlyDictionary<string, AssetInfo>> GetAssetInfoAsync(IList<Asset> assets,
         CancellationToken cancellationToken);
 }

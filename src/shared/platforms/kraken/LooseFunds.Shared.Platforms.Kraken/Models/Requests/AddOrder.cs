@@ -10,10 +10,11 @@ internal sealed record AddOrder
 
 internal enum OrderType
 {
-    Market
+    market,
+    limit
 }
 
 internal enum Type
 {
-    Buy
+    buy
 }

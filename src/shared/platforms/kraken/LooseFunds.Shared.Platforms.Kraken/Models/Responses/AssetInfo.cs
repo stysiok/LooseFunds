@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Responses;
 
-public sealed class GetAssetInfo
+public sealed class AssetInfo
 {
         [JsonProperty("aclass")] public string AssetClass { get; init; } = null!;
         [JsonProperty("altname")] public string AlternateName { get; init; } = null!;
