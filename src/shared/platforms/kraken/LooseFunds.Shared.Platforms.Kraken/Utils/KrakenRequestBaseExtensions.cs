@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Reflection;
 using System.Text;
 using LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
@@ -22,10 +23,27 @@ internal static class KrakenRequestBaseExtensions
                 var name = jsonPropertyAttribute is null
                     ? p.Name.ToLowerInvariant()
                     : jsonPropertyAttribute.PropertyName;
-                var value = p.GetValue(request)?.ToString();
+
+                var isCollection = p.PropertyType != typeof(string) &&
+                                   typeof(IEnumerable).IsAssignableFrom(p.PropertyType);
+                string value;
+                if (isCollection)
+                {
+                    var strings = new List<string>();
+                    foreach (var v in p.GetValue(request, null) as IList ?? Array.Empty<object>())
+                    {
+                        strings.Add(v?.ToString() ?? "");
+                    }
+                    value = string.Join(",", strings.Where(x => !string.IsNullOrEmpty(x)));
+                }
+                else
+                {
+                    value = p.GetValue(request)?.ToString() ?? "";
+                }
                 
-                return $"{name}={value}";
-            }));
+                return string.IsNullOrWhiteSpace(value) ? null : $"{name}={value}";
+            })
+            .Where(s => !string.IsNullOrEmpty(s)));
         return stringBuilder.ToString();
     }
 }

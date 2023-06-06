@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests;
 
-internal sealed record GetAssetInfo(
-    [property: JsonProperty("asset")]
-    IReadOnlyCollection<Asset> Assets) : PublicKrakenRequest
+internal sealed record GetTickerInformation(
+    [property: JsonProperty("pair")]
+    IReadOnlyCollection<Pair> Pairs) : PublicKrakenRequest
 {
-    public override string Pathname => $"{base.Pathname}Assets";
+    public override string Pathname => $"{base.Pathname}Ticker";
 }

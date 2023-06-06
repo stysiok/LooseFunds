@@ -50,4 +50,9 @@ app.MapGet("/balance",
     async (IUserDataService userDataService, CancellationToken cancellationToken) =>
         await userDataService.GetAccountBalanceAsync(cancellationToken));
 
+
+app.MapGet("/ticker",
+    async (IMarketDataService marketDataService, CancellationToken cancellationToken) =>
+        await marketDataService.GetTickerInfoAsync(new List<Pair> { Pair.XBTUSD, Pair.ETHUSD }, cancellationToken));
+
 app.Run();

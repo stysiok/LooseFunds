@@ -16,9 +16,13 @@ internal sealed class MarketDataService : IMarketDataService
     public Task<Time> GetTimeAsync(CancellationToken cancellationToken)
         => _client.GetAsync<Models.Requests.GetTime, Time>(new(), cancellationToken);
 
-    public Task<IReadOnlyDictionary<string, AssetInfo>> GetAssetInfoAsync(IList<Asset> assets,
+    public Task<IReadOnlyDictionary<string, AssetInfo>> GetAssetInfoAsync(IReadOnlyCollection<Asset> assets,
         CancellationToken cancellationToken)
-        => _client.GetAsync<Models.Requests.GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(
-            new(new Assets(assets)), cancellationToken);
+        => _client.GetAsync<Models.Requests.GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(new(assets),
+            cancellationToken);
 
+    public Task<IReadOnlyDictionary<string, Ticker>> GetTickerInfoAsync(IReadOnlyCollection<Pair> pairs,
+        CancellationToken cancellationToken) 
+        => _client.GetAsync<Models.Requests.GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(new(pairs),
+            cancellationToken);
 }
