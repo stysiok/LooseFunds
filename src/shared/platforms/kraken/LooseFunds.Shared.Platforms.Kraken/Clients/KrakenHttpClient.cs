@@ -13,9 +13,9 @@ namespace LooseFunds.Shared.Platforms.Kraken.Clients;
 internal sealed class KrakenHttpClient : IKrakenHttpClient
 {
     private const string ApiSign = "API-Sign", ApiKey = "API-Key";
-    private readonly IPrivateRequestSigner _signer;
-    private readonly ILogger<KrakenHttpClient> _logger;
     private readonly HttpClient _client;
+    private readonly ILogger<KrakenHttpClient> _logger;
+    private readonly IPrivateRequestSigner _signer;
 
     public KrakenHttpClient(HttpClient client, IPrivateRequestSigner signer, IOptions<KrakenOptions> options,
         IOptions<KrakenCredentials> credentials, ILogger<KrakenHttpClient> logger)
@@ -28,24 +28,24 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
         _client.DefaultRequestHeaders.Add(ApiKey, credentials.Value.Key);
     }
 
-    public async Task<TResponse> PostAsync<TRequest, TResponse>(TRequest request, 
+    public async Task<TResponse> PostAsync<TRequest, TResponse>(TRequest request,
         CancellationToken cancellationToken) where TRequest : PrivateKrakenRequest
     {
         var requestName = typeof(TRequest).Name;
         _logger.LogInformation("Started processing POST {Request}", requestName);
-        
+
         var signature = _signer.CreateSignature(request);
         _logger.LogDebug("{Request} is private, signature created (signature={Signature})", requestName,
-                signature);
+            signature);
         _client.DefaultRequestHeaders.Add(ApiSign, signature);
-        
+
         var inlinedParams = request.ToInlineParams();
         var content = new StringContent(inlinedParams, Encoding.UTF8, "application/x-www-form-urlencoded");
 
         var response = await _client.PostAsync(request.Pathname, content, cancellationToken);
         _logger.LogDebug("{Request} sent and response received (status_code={StatusCode})", requestName,
             response.StatusCode);
-        
+
         response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
@@ -58,13 +58,13 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
                 typeof(TResponse).Name);
             return krakenResponse.Data;
         }
-        
+
         _logger.LogError("Something went wrong while processing {Request} (errors={Errors})", typeof(TRequest).Name,
             krakenResponse?.Errors);
         throw new InvalidKrakenRequestException(krakenResponse?.Errors);
     }
-    
-    public async Task<TResponse> GetAsync<TRequest, TResponse>(TRequest request, 
+
+    public async Task<TResponse> GetAsync<TRequest, TResponse>(TRequest request,
         CancellationToken cancellationToken) where TRequest : PublicKrakenRequest
     {
         var requestName = typeof(TRequest).Name;
@@ -77,7 +77,7 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
         var response = await _client.GetAsync(requestUri, cancellationToken);
         _logger.LogDebug("{Request} sent and response received (status_code={StatusCode})", requestName,
             response.StatusCode);
-        
+
         response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
@@ -90,7 +90,7 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
                 typeof(TResponse).Name);
             return krakenResponse.Data;
         }
-        
+
         _logger.LogError("Something went wrong while processing {Request} (errors={Errors})", typeof(TRequest).Name,
             krakenResponse?.Errors);
         throw new InvalidKrakenRequestException(krakenResponse?.Errors);

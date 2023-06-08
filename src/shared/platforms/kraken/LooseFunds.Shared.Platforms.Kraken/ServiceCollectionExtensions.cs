@@ -8,12 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LooseFunds.Shared.Platforms.Kraken;
 
-public static class ServiceCollectionExtensions 
+public static class ServiceCollectionExtensions
 {
     public static void AddKraken(this IServiceCollection services, IConfiguration configuration)
     {
         var krakenConfigurationSection = configuration.GetRequiredSection(KrakenSettingsConsts.SectionName);
-        
+
         VerifyKrakenCredentials(krakenConfigurationSection);
         VerifyKrakenOptions(krakenConfigurationSection);
 
@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
         var krakenOptions = configurationSection.Get<KrakenOptions>();
         new KrakenOptionsValidator().ValidateAndThrow(krakenOptions);
     }
-    
+
     private static void VerifyKrakenCredentials(IConfiguration configurationSection)
     {
         var krakenCredentials = configurationSection.Get<KrakenCredentials>();

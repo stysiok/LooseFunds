@@ -6,11 +6,10 @@ namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
 
 internal abstract record PrivateKrakenRequest : KrakenRequest
 {
-    [JsonProperty("nonce")] 
-    public long Nonce { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-    
     protected PrivateKrakenRequest(string method) : base($"{KrakenRequestsConsts.PrivatePrefix}{method}")
     {
         new PrivateKrakenRequestValidator().ValidateAndThrow(this);
     }
+
+    [JsonProperty("nonce")] public long Nonce { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 }

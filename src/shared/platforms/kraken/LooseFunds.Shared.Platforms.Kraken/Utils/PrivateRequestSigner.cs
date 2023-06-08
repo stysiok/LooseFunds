@@ -21,11 +21,11 @@ internal sealed class PrivateRequestSigner : IPrivateRequestSigner
     public string CreateSignature<T>(T request) where T : PrivateKrakenRequest
     {
         var requestName = typeof(T).Name;
-        
+
         using var sha256 = SHA256.Create();
         var inlineParams = request.ToInlineParams();
-        _logger.LogDebug("{Request} params inlined (inlined_params={InlinedParams})",requestName, inlineParams);
-        
+        _logger.LogDebug("{Request} params inlined (inlined_params={InlinedParams})", requestName, inlineParams);
+
         var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes($"{request.Nonce.ToString()}{inlineParams}"));
         _logger.LogDebug("{Request} nonce+params hash computed", requestName);
 

@@ -7,10 +7,8 @@ namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
 
 internal abstract record KrakenRequest
 {
-    [JsonIgnore] 
-    [InlineParamsIgnore] 
-    public readonly string Pathname;
-    
+    [JsonIgnore] [InlineParamsIgnore] public readonly string Pathname;
+
     protected KrakenRequest(string pathname)
     {
         Pathname = pathname;
