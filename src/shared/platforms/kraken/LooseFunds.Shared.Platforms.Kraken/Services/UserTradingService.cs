@@ -10,7 +10,7 @@ internal sealed class UserTradingService : IUserTradingService
 {
     private readonly IKrakenHttpClient _client;
 
-    public UserTradingService(IKrakenHttpClient client) 
+    public UserTradingService(IKrakenHttpClient client)
         => _client = client;
 
     public Task<Order> AddOrderAsync(Pair pair, decimal volume, CancellationToken cancellationToken)
