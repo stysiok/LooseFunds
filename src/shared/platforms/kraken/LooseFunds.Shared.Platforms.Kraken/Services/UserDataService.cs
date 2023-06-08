@@ -4,14 +4,12 @@ namespace LooseFunds.Shared.Platforms.Kraken.Services;
 
 internal sealed class UserDataService : IUserDataService
 {
-    private readonly IKrakenHttpClient _krakenHttpClient;
+    private readonly IKrakenHttpClient _client;
 
-    public UserDataService(IKrakenHttpClient krakenHttpClient)
-    {
-        _krakenHttpClient = krakenHttpClient;
-    }
-    
+    public UserDataService(IKrakenHttpClient client)
+        => _client = client;
+
     public Task<IReadOnlyDictionary<string, decimal>> GetAccountBalanceAsync(CancellationToken cancellationToken)
-        => _krakenHttpClient.PostAsync<Models.Requests.GetAccountBalance, IReadOnlyDictionary<string, decimal>>(new(),
+        => _client.PostAsync<Models.Requests.GetAccountBalance, IReadOnlyDictionary<string, decimal>>(new(),
             cancellationToken);
 }

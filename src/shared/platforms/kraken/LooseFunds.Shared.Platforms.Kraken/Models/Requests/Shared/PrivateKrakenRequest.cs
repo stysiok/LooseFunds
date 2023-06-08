@@ -1,14 +1,16 @@
-using LooseFunds.Shared.Platforms.Kraken.Utils;
+using FluentValidation;
+using LooseFunds.Shared.Platforms.Kraken.Models.Requests.Validators;
 using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
 
-internal record PrivateKrakenRequest : KrakenRequest
+internal abstract record PrivateKrakenRequest : KrakenRequest
 {
     [JsonProperty("nonce")] 
-    public long Nonce { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds(); 
-
-    public override HttpMethod HttpMethod => HttpMethod.Post;
+    public long Nonce { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     
-    public override string Pathname => "private/";
+    protected PrivateKrakenRequest(string method) : base($"{KrakenRequestsConsts.PrivatePrefix}{method}")
+    {
+        new PrivateKrakenRequestValidator().ValidateAndThrow(this);
+    }
 }

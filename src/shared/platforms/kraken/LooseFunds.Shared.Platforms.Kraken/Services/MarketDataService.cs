@@ -8,10 +8,8 @@ internal sealed class MarketDataService : IMarketDataService
 {
     private readonly IKrakenHttpClient _client;
 
-    public MarketDataService(IKrakenHttpClient client)
-    {
-        _client = client;
-    }
+    public MarketDataService(IKrakenHttpClient client) 
+        => _client = client;
 
     public Task<Time> GetTimeAsync(CancellationToken cancellationToken)
         => _client.GetAsync<Models.Requests.GetTime, Time>(new(), cancellationToken);

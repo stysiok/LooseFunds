@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
 {
     public static void AddKraken(this IServiceCollection services, IConfiguration configuration)
     {
-        var krakenConfigurationSection = configuration.GetRequiredSection(KrakenSettingsConstants.SectionName);
+        var krakenConfigurationSection = configuration.GetRequiredSection(KrakenSettingsConsts.SectionName);
         
         VerifyKrakenCredentials(krakenConfigurationSection);
         VerifyKrakenOptions(krakenConfigurationSection);
@@ -25,13 +25,13 @@ public static class ServiceCollectionExtensions
             .AddHttpClient<IKrakenHttpClient, KrakenHttpClient>();
     }
 
-    private static void VerifyKrakenOptions(IConfigurationSection configurationSection)
+    private static void VerifyKrakenOptions(IConfiguration configurationSection)
     {
         var krakenOptions = configurationSection.Get<KrakenOptions>();
         new KrakenOptionsValidator().ValidateAndThrow(krakenOptions);
     }
     
-    private static void VerifyKrakenCredentials(IConfigurationSection configurationSection)
+    private static void VerifyKrakenCredentials(IConfiguration configurationSection)
     {
         var krakenCredentials = configurationSection.Get<KrakenCredentials>();
         new KrakenCredentialsValidator().ValidateAndThrow(krakenCredentials);

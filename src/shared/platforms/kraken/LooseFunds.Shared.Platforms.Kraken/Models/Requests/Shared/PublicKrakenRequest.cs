@@ -1,7 +1,8 @@
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
 
-internal record PublicKrakenRequest : KrakenRequest
+internal abstract record PublicKrakenRequest : KrakenRequest
 {
-    public override HttpMethod HttpMethod { get; } = HttpMethod.Get;
-    public override string Pathname => "public/";
+    protected PublicKrakenRequest(string method) : base($"{KrakenRequestsConsts.PublicPrefix}{method}")
+    {
+    }
 }

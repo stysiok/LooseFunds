@@ -1,6 +1,6 @@
 namespace LooseFunds.Shared.Platforms.Kraken.Utils;
 
-[AttributeUsage(AttributeTargets.Property)]
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 internal sealed class InlineParamsIgnore : Attribute
 {
 }

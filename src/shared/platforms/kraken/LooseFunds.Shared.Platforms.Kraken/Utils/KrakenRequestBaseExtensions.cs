@@ -11,7 +11,7 @@ internal static class KrakenRequestBaseExtensions
     internal static string ToInlineParams(this KrakenRequest request)
     {
         if (request == null) throw new ArgumentNullException(nameof(request));
-        
+
         var stringBuilder = new StringBuilder();
         stringBuilder.AppendJoin('&', request.GetType()
             .GetProperties()
@@ -29,18 +29,15 @@ internal static class KrakenRequestBaseExtensions
                 string value;
                 if (isCollection)
                 {
-                    var strings = new List<string>();
-                    foreach (var v in p.GetValue(request, null) as IList ?? Array.Empty<object>())
-                    {
-                        strings.Add(v?.ToString() ?? "");
-                    }
-                    value = string.Join(",", strings.Where(x => !string.IsNullOrEmpty(x)));
+                    var values = (from object? v in p.GetValue(request, null) as IList ?? Array.Empty<object>()
+                        select v?.ToString() ?? "").Where(x => !string.IsNullOrEmpty(x)).ToList();
+                    value = string.Join(",", values);
                 }
                 else
                 {
                     value = p.GetValue(request)?.ToString() ?? "";
                 }
-                
+
                 return string.IsNullOrWhiteSpace(value) ? null : $"{name}={value}";
             })
             .Where(s => !string.IsNullOrEmpty(s)));

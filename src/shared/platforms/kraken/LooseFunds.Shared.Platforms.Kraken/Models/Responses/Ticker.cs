@@ -2,15 +2,13 @@ using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Models.Responses;
 
-public sealed class Ticker
-{
-    [JsonProperty("a")] public string[] Ask { get; init; } = null!;
-    [JsonProperty("b")] public string[] Bid { get; init; } = null!;
-    [JsonProperty("c")] public string[] LastTradeClosed { get; init; } = null!;
-    [JsonProperty("v")] public string[] Volume { get; init; } = null!;
-    [JsonProperty("p")] public string[] AveragePrice { get; init; } = null!;
-    [JsonProperty("t")] public int[] TradesNumber { get; init; } = null!;
-    [JsonProperty("l")] public string[] Low { get; init; } = null!;
-    [JsonProperty("h")] public string[] High { get; init; } = null!;
-    [JsonProperty("o")] public string OpeningPrice { get; init; } = null!;
-}
+public sealed record Ticker(
+    [property: JsonProperty("a")] string[] Ask,
+    [property: JsonProperty("b")] string[] Bid,
+    [property: JsonProperty("c")] string[] LastTradeClosed,
+    [property: JsonProperty("v")] string[] Volume,
+    [property: JsonProperty("p")] string[] AveragePrice,
+    [property: JsonProperty("t")] int[] TradesNumber,
+    [property: JsonProperty("l")] string[] Low,
+    [property: JsonProperty("h")] string[] High,
+    [property: JsonProperty("o")] string OpeningPrice);
