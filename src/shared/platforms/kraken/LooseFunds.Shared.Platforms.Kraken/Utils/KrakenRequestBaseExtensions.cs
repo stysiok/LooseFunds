@@ -10,8 +10,6 @@ internal static class KrakenRequestBaseExtensions
 {
     internal static string ToInlineParams(this KrakenRequest request)
     {
-        if (request == null) throw new ArgumentNullException(nameof(request));
-
         var stringBuilder = new StringBuilder();
         stringBuilder.AppendJoin('&', request.GetType()
             .GetProperties()

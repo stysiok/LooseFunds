@@ -7,9 +7,9 @@ public interface IMarketDataService
 {
     Task<Time> GetTimeAsync(CancellationToken cancellationToken);
 
-    Task<IReadOnlyDictionary<string, AssetInfo>> GetAssetInfoAsync(IReadOnlyCollection<Asset> assets,
+    Task<IReadOnlyDictionary<string, AssetInfo>> GetAssetInfoAsync(IList<Asset> assets,
         CancellationToken cancellationToken);
 
-    Task<IReadOnlyDictionary<string, Ticker>> GetTickerInfoAsync(IReadOnlyCollection<Pair> pairs,
+    Task<IReadOnlyDictionary<string, Ticker>> GetTickerInfoAsync(IList<Pair> pairs,
         CancellationToken cancellationToken);
 }

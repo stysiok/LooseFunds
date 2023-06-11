@@ -6,6 +6,8 @@ using LooseFunds.Shared.Platforms.Kraken.Utils;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
+using OrderType = LooseFunds.Shared.Platforms.Kraken.Models.Requests.OrderType;
+using Type = LooseFunds.Shared.Platforms.Kraken.Models.Requests.Type;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Tests.Utils;
 

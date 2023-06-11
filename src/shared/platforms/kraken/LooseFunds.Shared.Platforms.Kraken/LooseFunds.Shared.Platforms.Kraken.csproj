@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <InternalsVisibleTo Include="LooseFunds.Shared.Platforms.Kraken.Tests"/>
+        <InternalsVisibleTo Include="LooseFunds.Shared.Platforms.Kraken.Tests" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation" Version="11.5.2"/>
-        <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
-        <PackageReference Include="RestSharp" Version="110.2.0"/>
+        <PackageReference Include="FluentValidation" Version="11.5.2" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="RestSharp" Version="110.2.0" />
     </ItemGroup>
 
 </Project>
