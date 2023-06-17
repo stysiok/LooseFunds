@@ -6,6 +6,6 @@ internal sealed class GetAssetInfoRequestValidator : AbstractValidator<GetAssetI
 {
     public GetAssetInfoRequestValidator()
     {
-        RuleFor(x => x.Assets).NotNull();
+        RuleFor(x => x.Assets).NotEmpty();
     }
 }

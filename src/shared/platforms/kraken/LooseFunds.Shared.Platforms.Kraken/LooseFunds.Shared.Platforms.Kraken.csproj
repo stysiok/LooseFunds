@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <InternalsVisibleTo Include="LooseFunds.Shared.Platforms.Kraken.Tests" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     </ItemGroup>
 
     <ItemGroup>

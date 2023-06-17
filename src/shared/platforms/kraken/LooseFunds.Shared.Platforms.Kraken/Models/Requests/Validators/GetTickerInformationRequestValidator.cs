@@ -6,6 +6,6 @@ internal sealed class GetTickerInformationRequestValidator : AbstractValidator<G
 {
     public GetTickerInformationRequestValidator()
     {
-        RuleFor(x => x.Pairs).NotNull();
+        RuleFor(x => x.Pairs).NotEmpty();
     }
 }
