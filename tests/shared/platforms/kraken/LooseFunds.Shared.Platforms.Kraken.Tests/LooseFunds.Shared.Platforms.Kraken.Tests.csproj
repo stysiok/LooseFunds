@@ -7,18 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoFixture" Version="4.18.0" />
-        <PackageReference Include="Bogus" Version="34.0.2" />
-        <PackageReference Include="FluentAssertions" Version="6.11.0" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-        <PackageReference Include="Moq" Version="4.18.4" />
-        <PackageReference Include="NUnit" Version="3.13.2" />
-        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
-        <PackageReference Include="coverlet.collector" Version="3.1.0" />
+        <PackageReference Include="AutoFixture" Version="4.18.0"/>
+        <PackageReference Include="Bogus" Version="34.0.2"/>
+        <PackageReference Include="FluentAssertions" Version="6.11.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0"/>
+        <PackageReference Include="Moq" Version="4.18.4"/>
+        <PackageReference Include="NUnit" Version="3.13.2"/>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.0.0"/>
+        <PackageReference Include="coverlet.collector" Version="3.1.0"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\..\..\src\shared\platforms\kraken\LooseFunds.Shared.Platforms.Kraken\LooseFunds.Shared.Platforms.Kraken.csproj" />
+        <ProjectReference Include="..\..\..\..\..\src\shared\platforms\kraken\LooseFunds.Shared.Platforms.Kraken\LooseFunds.Shared.Platforms.Kraken.csproj"/>
     </ItemGroup>
 
 </Project>

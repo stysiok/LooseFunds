@@ -20,19 +20,18 @@ public static class LoggingServiceCollectionExtensions
                 loggerConfiguration.MinimumLevel.Debug();
             else
                 loggerConfiguration.MinimumLevel.Information();
-            
+
             var enricher = serviceProvider.GetService<CorrelationLogEnricher>();
             if (enricher is not null)
                 loggerConfiguration.Enrich.With(enricher);
-            
+
             loggerConfiguration
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Environment", context.HostingEnvironment.EnvironmentName)
                 .Enrich.WithProperty("ApplicationName", applicationName)
                 .WriteTo.Console();
 
-            if (!string.IsNullOrWhiteSpace(loggingOptions?.Seq)) 
+            if (!string.IsNullOrWhiteSpace(loggingOptions?.Seq))
                 loggerConfiguration.WriteTo.Seq(loggingOptions.Seq);
         });
 }
-

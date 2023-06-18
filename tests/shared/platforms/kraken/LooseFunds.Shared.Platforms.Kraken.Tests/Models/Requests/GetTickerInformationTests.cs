@@ -13,13 +13,13 @@ namespace LooseFunds.Shared.Platforms.Kraken.Tests.Models.Requests;
 public class GetTickerInformationTests
 {
     private readonly Fixture _fixture = new();
-        
+
     [Test]
     public void GetTickerInformation_parameters_have_correct_values()
     {
         //Arrange
         var pairs = new ReadOnlyCollection<Pair>(_fixture.CreateMany<Pair>().ToList());
-        
+
         //Act
         var request = new GetTickerInformation(pairs);
 

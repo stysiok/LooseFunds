@@ -15,7 +15,7 @@ public class KrakenRequestTests
     {
         //Arrange & Act
         var request = new TestKrakenRequest(pathname);
-        
+
         //Assert
         request.Should().NotBeNull();
         request.Pathname.Should().BeEquivalentTo(pathname);

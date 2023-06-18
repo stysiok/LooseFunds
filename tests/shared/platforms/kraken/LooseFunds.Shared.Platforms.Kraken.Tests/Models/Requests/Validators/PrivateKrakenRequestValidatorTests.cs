@@ -13,7 +13,7 @@ namespace LooseFunds.Shared.Platforms.Kraken.Tests.Models.Requests.Validators;
 public class PrivateKrakenRequestValidatorTests
 {
     private readonly PrivateKrakenRequestValidator _validator = new();
-    
+
     [Test]
     public void PrivateKrakenRequestValidator_returns_valid_for_valid_private_request()
     {
@@ -22,12 +22,12 @@ public class PrivateKrakenRequestValidatorTests
 
         //Act
         var result = _validator.Validate(privateKrakenRequest);
-        
+
         //Assert
         result.IsValid.Should().BeTrue();
         result.Errors.Should().BeEmpty();
     }
-    
+
     [TestCase(0)]
     [TestCase(-500100900)]
     public void PrivateKrakenRequestValidator_validates_if_nonce_is_greater_than_zero(long nonce)
@@ -37,7 +37,7 @@ public class PrivateKrakenRequestValidatorTests
 
         //Act
         var result = _validator.Validate(privateKrakenRequest);
-        
+
         //Assert
         result.IsValid.Should().BeFalse();
         result.Errors.Should().NotBeEmpty();

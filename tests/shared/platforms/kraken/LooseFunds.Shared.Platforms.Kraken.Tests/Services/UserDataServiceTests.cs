@@ -1,30 +1,10 @@
-// using LooseFunds.Shared.Platforms.Kraken.Clients;
-// using LooseFunds.Shared.Platforms.Kraken.Models.Requests;
-//
-// namespace LooseFunds.Shared.Platforms.Kraken.Services;
-//
-// internal sealed class UserDataService : IUserDataService
-// {
-//     private readonly IKrakenHttpClient _client;
-//
-//     public UserDataService(IKrakenHttpClient client)
-//         => _client = client;
-//
-//     public Task<IReadOnlyDictionary<string, decimal>> GetAccountBalanceAsync(CancellationToken cancellationToken)
-//         => _client.PostAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(new(),
-//             cancellationToken);
-// }
-
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
-using FluentValidation;
 using LooseFunds.Shared.Platforms.Kraken.Clients;
-using LooseFunds.Shared.Platforms.Kraken.Models.Common;
 using LooseFunds.Shared.Platforms.Kraken.Models.Requests;
-using LooseFunds.Shared.Platforms.Kraken.Models.Responses;
 using LooseFunds.Shared.Platforms.Kraken.Services;
 using Moq;
 using NUnit.Framework;
@@ -53,7 +33,8 @@ public class UserDataServiceTests
 
         var balance = _fixture.Create<IReadOnlyDictionary<string, decimal>>();
         _krakenHttpClient
-            .Setup(x => x.PostAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(It.IsAny<GetAccountBalance>(), It.IsAny<CancellationToken>()))
+            .Setup(x => x.PostAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(
+                It.IsAny<GetAccountBalance>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(balance);
 
         //Act
@@ -62,6 +43,8 @@ public class UserDataServiceTests
         //Assert
         result.Should().BeEquivalentTo(balance);
 
-        _krakenHttpClient.Verify(x => x.PostAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(It.IsAny<GetAccountBalance>(), cancellationToken), Times.Once);
+        _krakenHttpClient.Verify(
+            x => x.PostAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(It.IsAny<GetAccountBalance>(),
+                cancellationToken), Times.Once);
     }
 }

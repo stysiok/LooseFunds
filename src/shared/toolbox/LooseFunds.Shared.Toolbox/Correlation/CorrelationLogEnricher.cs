@@ -12,7 +12,7 @@ internal sealed class CorrelationLogEnricher : ILogEventEnricher
     {
         _httpContextAccessor = httpContextAccessor;
     }
-    
+
     public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
     {
         var httpContext = _httpContextAccessor.HttpContext;
@@ -20,10 +20,9 @@ internal sealed class CorrelationLogEnricher : ILogEventEnricher
         if (httpContext is null ||
             !httpContext.Request.Headers.TryGetValue(CorrelationConsts.CorrelationHeader, out var values) ||
             !values.Any()) return;
-        
+
         var correlationId = values.First();
         logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(CorrelationConsts.CorrelationLogName,
             correlationId));
     }
 }
-

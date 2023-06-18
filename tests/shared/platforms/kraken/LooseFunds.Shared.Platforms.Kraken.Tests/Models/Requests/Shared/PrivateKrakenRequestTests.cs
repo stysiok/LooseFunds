@@ -11,7 +11,7 @@ namespace LooseFunds.Shared.Platforms.Kraken.Tests.Models.Requests.Shared;
 public class PrivateKrakenRequestTests
 {
     private readonly Fixture _fixture = new();
-    
+
     [Test]
     public void PrivateKrakenRequest_starts_with_private_prefix()
     {
@@ -21,21 +21,21 @@ public class PrivateKrakenRequestTests
         //Assert
         request.Pathname.Should().StartWithEquivalentOf("private/");
     }
-    
+
     [Test]
     public void PrivateKrakenRequest_correctly_builds_path()
     {
         //Arrange
         var path = _fixture.Create<string>();
         var expected = $"private/{path}";
-        
+
         //Act
         var request = new TestPrivateKrakenRequest(path);
 
         //Assert
         request.Pathname.Should().BeEquivalentTo(expected);
     }
-    
+
     [Test]
     public void PrivateKrakenRequest_by_default_has_valid_nonce()
     {
@@ -55,11 +55,11 @@ public class PrivateKrakenRequestTests
         var request2 = new TestPrivateKrakenRequest("");
         await Task.Delay(10);
         var request3 = new TestPrivateKrakenRequest("");
-        
+
         //Assert
         request1.Nonce.Should().BeLessThan(request2.Nonce);
         request1.Nonce.Should().BeLessThan(request3.Nonce);
-        
+
         request2.Nonce.Should().BeGreaterThan(request1.Nonce);
         request2.Nonce.Should().BeLessThan(request3.Nonce);
 

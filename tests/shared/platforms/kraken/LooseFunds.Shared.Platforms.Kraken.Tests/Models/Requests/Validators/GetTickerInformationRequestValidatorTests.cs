@@ -16,7 +16,7 @@ public class GetTickerInformationRequestValidatorTests
 {
     private readonly Fixture _fixture = new();
     private readonly GetTickerInformationRequestValidator _validator = new();
-    
+
     [Test]
     public void GetTickerInformationRequestValidator_returns_valid_for_valid_request()
     {
@@ -30,7 +30,7 @@ public class GetTickerInformationRequestValidatorTests
         result.IsValid.Should().BeTrue();
         result.Errors.Should().BeEmpty();
     }
-    
+
     [Test]
     public void GetTickerInformationRequestValidator_throws_argument_null_exception_when_pairs_are_null()
     {
@@ -39,7 +39,7 @@ public class GetTickerInformationRequestValidatorTests
             var _ = new GetAssetInfo(null);
         });
     }
-    
+
     [Test]
     public void GetTickerInformationRequestValidator_throws_validation_exception_when_pairs_are_empty()
     {

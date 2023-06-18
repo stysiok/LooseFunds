@@ -10,7 +10,7 @@ namespace LooseFunds.Shared.Platforms.Kraken.Tests.Models.Requests.Shared;
 public class PublicKrakenRequestTests
 {
     private readonly Fixture _fixture = new();
-    
+
     [Test]
     public void PublicKrakenRequest_starts_with_private_prefix()
     {
@@ -20,14 +20,14 @@ public class PublicKrakenRequestTests
         //Assert
         request.Pathname.Should().StartWithEquivalentOf("public/");
     }
-    
+
     [Test]
     public void PublicKrakenRequest_correctly_builds_path()
     {
         //Arrange
         var path = _fixture.Create<string>();
         var expected = $"public/{path}";
-        
+
         //Act
         var request = new TestPublicKrakenRequest(path);
 

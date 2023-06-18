@@ -1,8 +1,8 @@
 using FluentAssertions;
+using FluentValidation;
 using LooseFunds.Shared.Platforms.Kraken.Models.Common;
 using LooseFunds.Shared.Platforms.Kraken.Models.Requests;
 using NUnit.Framework;
-using Type = LooseFunds.Shared.Platforms.Kraken.Models.Requests.Type;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Tests.Models.Requests;
 
@@ -19,7 +19,7 @@ public class AddOrderTests
         const decimal volume = 10.21m;
         const Pair pair = Pair.XBTUSD;
         const int price = 1200;
-        
+
         //Act
         var request = new AddOrder(orderType, type, volume, pair, price);
 
@@ -31,13 +31,13 @@ public class AddOrderTests
         request.Pair.Should().Be(pair);
         request.Price.Should().Be(price);
     }
-    
+
     [TestCase(-123.23, Pair.XBTUSD, 100)]
     [TestCase(1233.312, Pair.XBTUSD, -100)]
     public void AddOrder_throws_exception_when_parameter_is_invalid(decimal volume, Pair pair, int price)
     {
         //Act & Assert
-        Assert.Throws<FluentValidation.ValidationException>(() =>
+        Assert.Throws<ValidationException>(() =>
         {
             var _ = new AddOrder(OrderType.limit, Type.buy, volume, pair, price);
         });

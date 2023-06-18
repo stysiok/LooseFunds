@@ -13,7 +13,7 @@ namespace LooseFunds.Shared.Platforms.Kraken.Tests.Models.Requests;
 public class GetAssetInfoTests
 {
     private readonly Fixture _fixture = new();
-        
+
     [Test]
     public void GetAssetInfo_parameters_have_correct_values()
     {

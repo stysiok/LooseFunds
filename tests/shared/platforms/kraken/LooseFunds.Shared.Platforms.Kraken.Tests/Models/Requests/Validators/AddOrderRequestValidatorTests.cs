@@ -27,7 +27,7 @@ public class AddOrderRequestValidatorTests
         result.IsValid.Should().BeTrue();
         result.Errors.Should().BeEmpty();
     }
-    
+
     [TestCase(-10.1)]
     [TestCase(null)]
     public void KrakenRequestValidator_throws_exception_when_volume_is_null_or_less_than_zero(decimal volume)
@@ -38,7 +38,7 @@ public class AddOrderRequestValidatorTests
             var _ = new AddOrder(OrderType.limit, Type.buy, volume, Pair.XBTUSD);
         });
     }
-    
+
     [Test]
     public void KrakenRequestValidator_throws_exception_when_price_is_less_than_zero()
     {

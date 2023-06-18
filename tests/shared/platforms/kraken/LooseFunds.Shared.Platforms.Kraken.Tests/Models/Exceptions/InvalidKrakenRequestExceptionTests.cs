@@ -12,9 +12,9 @@ public class InvalidKrakenRequestExceptionTests
     public void InvalidKrakenRequestException_has_valid_message()
     {
         //Arrange
-        var exception = new InvalidKrakenRequestException(new [] { "123", "321" }); 
+        var exception = new InvalidKrakenRequestException(new[] { "123", "321" });
         const string expected = "Request returned following errors: 123, 321";
-        
+
         //Assert
         exception.Message.Should().BeEquivalentTo(expected);
     }

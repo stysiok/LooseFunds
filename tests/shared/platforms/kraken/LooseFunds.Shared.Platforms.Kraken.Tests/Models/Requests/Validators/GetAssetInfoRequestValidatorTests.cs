@@ -16,7 +16,7 @@ public class GetAssetInfoRequestValidatorTests
 {
     private readonly Fixture _fixture = new();
     private readonly GetAssetInfoRequestValidator _validator = new();
-    
+
     [Test]
     public void GetAssetInfoRequestValidator_returns_valid_for_valid_request()
     {
@@ -30,7 +30,7 @@ public class GetAssetInfoRequestValidatorTests
         result.IsValid.Should().BeTrue();
         result.Errors.Should().BeEmpty();
     }
-    
+
     [Test]
     public void GetAssetInfoRequestValidator_throws_argument_null_exception_when_assets_are_null()
     {
@@ -39,7 +39,7 @@ public class GetAssetInfoRequestValidatorTests
             var _ = new GetAssetInfo(null);
         });
     }
-    
+
     [Test]
     public void GetAssetInfoRequestValidator_throws_validation_exception_when_assets_are_empty()
     {

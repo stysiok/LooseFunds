@@ -9,12 +9,12 @@ namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests;
 
 internal sealed record GetTickerInformation : PublicKrakenRequest
 {
-    [JsonProperty("pair")] public IReadOnlyCollection<Pair> Pairs { get; }
-    
     public GetTickerInformation(IList<Pair> pairs) : base("Ticker")
     {
         Pairs = new ReadOnlyCollection<Pair>(pairs);
 
         new GetTickerInformationRequestValidator().ValidateAndThrow(this);
     }
+
+    [JsonProperty("pair")] public IReadOnlyCollection<Pair> Pairs { get; }
 }

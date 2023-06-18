@@ -29,7 +29,7 @@ public class MarketDataServiceTests
         _krakenHttpClient = new();
         _marketDataService = new MarketDataService(_krakenHttpClient.Object);
     }
-    
+
     [Test]
     public async Task GetTimeAsync_returns_time()
     {
@@ -40,16 +40,16 @@ public class MarketDataServiceTests
         _krakenHttpClient
             .Setup(x => x.GetAsync<GetTime, Time>(It.IsAny<GetTime>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(time);
-        
+
         //Act
         var result = await _marketDataService.GetTimeAsync(cancellationToken);
 
         //Assert
         result.Should().BeEquivalentTo(time);
-        
+
         _krakenHttpClient.Verify(x => x.GetAsync<GetTime, Time>(It.IsAny<GetTime>(), cancellationToken), Times.Once);
     }
-    
+
     [Test]
     public async Task GetAssetInfoAsync_returns_assets()
     {
@@ -59,18 +59,21 @@ public class MarketDataServiceTests
 
         var assetInfos = _fixture.Create<IReadOnlyDictionary<string, AssetInfo>>();
         _krakenHttpClient
-            .Setup(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(), It.IsAny<CancellationToken>()))
+            .Setup(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(assetInfos);
-        
+
         //Act
         var result = await _marketDataService.GetAssetInfoAsync(assets, cancellationToken);
 
         //Assert
         result.Should().BeEquivalentTo(assetInfos);
-        
-        _krakenHttpClient.Verify(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.Is<GetAssetInfo>(ai => ai.Assets.All(assets.Contains)), cancellationToken), Times.Once);
+
+        _krakenHttpClient.Verify(
+            x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(
+                It.Is<GetAssetInfo>(ai => ai.Assets.All(assets.Contains)), cancellationToken), Times.Once);
     }
-    
+
     [Test]
     public async Task GetAssetInfoAsync_throws_argument_exception_when_assets_are_null()
     {
@@ -79,18 +82,21 @@ public class MarketDataServiceTests
 
         var assetInfos = _fixture.Create<IReadOnlyDictionary<string, AssetInfo>>();
         _krakenHttpClient
-            .Setup(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(), It.IsAny<CancellationToken>()))
+            .Setup(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(assetInfos);
-        
+
         //Act
         var act = async () => await _marketDataService.GetAssetInfoAsync(null, cancellationToken);
 
         //Assert
         await act.Should().ThrowAsync<ArgumentException>();
-        
-        _krakenHttpClient.Verify(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(), cancellationToken), Times.Never);
+
+        _krakenHttpClient.Verify(
+            x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(),
+                cancellationToken), Times.Never);
     }
-    
+
     [Test]
     public async Task GetAssetInfoAsync_throws_validation_exception_when_assets_are_empty()
     {
@@ -100,18 +106,21 @@ public class MarketDataServiceTests
 
         var assetInfos = _fixture.Create<IReadOnlyDictionary<string, AssetInfo>>();
         _krakenHttpClient
-            .Setup(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(), It.IsAny<CancellationToken>()))
+            .Setup(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(),
+                It.IsAny<CancellationToken>()))
             .ReturnsAsync(assetInfos);
-        
+
         //Act
         var act = async () => await _marketDataService.GetAssetInfoAsync(emptyAssets, cancellationToken);
 
         //Assert
         await act.Should().ThrowAsync<ValidationException>();
-        
-        _krakenHttpClient.Verify(x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(), cancellationToken), Times.Never);
+
+        _krakenHttpClient.Verify(
+            x => x.GetAsync<GetAssetInfo, IReadOnlyDictionary<string, AssetInfo>>(It.IsAny<GetAssetInfo>(),
+                cancellationToken), Times.Never);
     }
-    
+
     [Test]
     public async Task GetTickerInfoAsync_returns_tickers()
     {
@@ -121,18 +130,21 @@ public class MarketDataServiceTests
 
         var tickers = _fixture.Create<IReadOnlyDictionary<string, Ticker>>();
         _krakenHttpClient
-            .Setup(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(It.IsAny<GetTickerInformation>(), It.IsAny<CancellationToken>()))
+            .Setup(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(
+                It.IsAny<GetTickerInformation>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(tickers);
-        
+
         //Act
         var result = await _marketDataService.GetTickerInfoAsync(pairs, cancellationToken);
 
         //Assert
         result.Should().BeEquivalentTo(tickers);
-        
-        _krakenHttpClient.Verify(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(It.Is<GetTickerInformation>(ti => ti.Pairs.All(pairs.Contains)), cancellationToken), Times.Once);
+
+        _krakenHttpClient.Verify(
+            x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(
+                It.Is<GetTickerInformation>(ti => ti.Pairs.All(pairs.Contains)), cancellationToken), Times.Once);
     }
-    
+
     [Test]
     public async Task GetTickerInfoAsync_throws_validation_exception_when_pairs_are_empty()
     {
@@ -142,18 +154,21 @@ public class MarketDataServiceTests
 
         var tickers = _fixture.Create<IReadOnlyDictionary<string, Ticker>>();
         _krakenHttpClient
-            .Setup(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(It.IsAny<GetTickerInformation>(), It.IsAny<CancellationToken>()))
+            .Setup(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(
+                It.IsAny<GetTickerInformation>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(tickers);
-        
+
         //Act
         var act = async () => await _marketDataService.GetTickerInfoAsync(emptyPairs, cancellationToken);
 
         //Assert
         await act.Should().ThrowAsync<ValidationException>();
-        
-        _krakenHttpClient.Verify(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(It.IsAny<GetTickerInformation>(), cancellationToken), Times.Never);
+
+        _krakenHttpClient.Verify(
+            x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(It.IsAny<GetTickerInformation>(),
+                cancellationToken), Times.Never);
     }
-    
+
     [Test]
     public async Task GetTickerInfoAsync_throws_argument_exception_when_pairs_are_null()
     {
@@ -162,15 +177,18 @@ public class MarketDataServiceTests
 
         var tickers = _fixture.Create<IReadOnlyDictionary<string, Ticker>>();
         _krakenHttpClient
-            .Setup(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(It.IsAny<GetTickerInformation>(), It.IsAny<CancellationToken>()))
+            .Setup(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(
+                It.IsAny<GetTickerInformation>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(tickers);
-        
+
         //Act
         var act = async () => await _marketDataService.GetTickerInfoAsync(null, cancellationToken);
 
         //Assert
         await act.Should().ThrowAsync<ArgumentException>();
-        
-        _krakenHttpClient.Verify(x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(It.IsAny<GetTickerInformation>(), cancellationToken), Times.Never);
+
+        _krakenHttpClient.Verify(
+            x => x.GetAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(It.IsAny<GetTickerInformation>(),
+                cancellationToken), Times.Never);
     }
 }

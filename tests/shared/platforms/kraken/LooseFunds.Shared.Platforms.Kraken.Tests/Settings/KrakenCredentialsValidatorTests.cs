@@ -11,7 +11,7 @@ namespace LooseFunds.Shared.Platforms.Kraken.Tests.Settings;
 public class KrakenCredentialsValidatorTests
 {
     private readonly Fixture _fixture = new();
-    
+
     [Test]
     public void KrakenCredentialsValidator_returns_valid_for_valid_credentials()
     {
@@ -21,12 +21,12 @@ public class KrakenCredentialsValidatorTests
 
         //Act
         var result = validator.Validate(krakenCredentials);
-        
+
         //Assert
         result.IsValid.Should().BeTrue();
         result.Errors.Should().BeEmpty();
     }
-    
+
     [Test]
     public void KrakenCredentialsValidator_validates_if_key_is_empty()
     {
@@ -36,13 +36,13 @@ public class KrakenCredentialsValidatorTests
 
         //Act
         var result = validator.Validate(krakenCredentials);
-        
+
         //Assert
         result.IsValid.Should().BeFalse();
         result.Errors.Count.Should().Be(1);
         result.Errors.First().PropertyName.Should().BeEquivalentTo(nameof(krakenCredentials.Key));
     }
-    
+
     [Test]
     public void KrakenCredentialsValidator_validates_if_secret_is_empty()
     {
@@ -52,11 +52,10 @@ public class KrakenCredentialsValidatorTests
 
         //Act
         var result = validator.Validate(krakenCredentials);
-        
+
         //Assert
         result.IsValid.Should().BeFalse();
         result.Errors.Count.Should().Be(1);
         result.Errors.First().PropertyName.Should().BeEquivalentTo(nameof(krakenCredentials.Secret));
-        
     }
 }

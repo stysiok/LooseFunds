@@ -9,12 +9,12 @@ namespace LooseFunds.Shared.Platforms.Kraken.Models.Requests;
 
 internal sealed record GetAssetInfo : PublicKrakenRequest
 {
-    [JsonProperty("asset")] public IReadOnlyCollection<Asset> Assets { get; }
-
     public GetAssetInfo(IList<Asset> assets) : base("Assets")
     {
         Assets = new ReadOnlyCollection<Asset>(assets);
-        
+
         new GetAssetInfoRequestValidator().ValidateAndThrow(this);
     }
+
+    [JsonProperty("asset")] public IReadOnlyCollection<Asset> Assets { get; }
 }
