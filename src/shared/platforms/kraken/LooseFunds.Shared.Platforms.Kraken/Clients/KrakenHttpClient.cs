@@ -28,33 +28,27 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
         _client.DefaultRequestHeaders.Add(ApiKey, credentials.Value.Key);
     }
 
-    public async Task<TResponse> PostAsync<TRequest, TResponse>(TRequest request,
-        CancellationToken cancellationToken) where TRequest : PrivateKrakenRequest
+    public async Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request,
+        CancellationToken cancellationToken) where TRequest : KrakenRequest
     {
-        var requestName = typeof(TRequest).Name;
-        _logger.LogInformation("Started processing POST {Request}", requestName);
+        _logger.LogInformation("Started processing POST {Request}", request.Pathname);
 
-        var signature = _signer.CreateSignature(request);
-        _logger.LogDebug("{Request} is private, signature created (signature={Signature})", requestName,
-            signature);
-        _client.DefaultRequestHeaders.Add(ApiSign, signature);
-
-        var inlinedParams = request.ToInlineParams();
-        var content = new StringContent(inlinedParams, Encoding.UTF8, "application/x-www-form-urlencoded");
-
-        var response = await _client.PostAsync(request.Pathname, content, cancellationToken);
-        _logger.LogDebug("{Request} sent and response received (status_code={StatusCode})", requestName,
-            response.StatusCode);
+        var response = request switch
+        {
+            PrivateKrakenRequest privateKrakenRequest => await ProcessRequest(privateKrakenRequest, cancellationToken),
+            PublicKrakenRequest publicKrakenRequest => await ProcessRequest(publicKrakenRequest, cancellationToken),
+            _ => throw new InvalidKrakenRequestException(new[] { "Unknown request type" })
+        };
 
         response.EnsureSuccessStatusCode();
 
         var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
         var krakenResponse = JsonConvert.DeserializeObject<KrakenResponse<TResponse>>(responseContent);
-        _logger.LogDebug("{Request} content deserialized to {Response}", requestName, typeof(TResponse).Name);
+        _logger.LogDebug("{Request} content deserialized to {Response}", request.Pathname, typeof(TResponse).Name);
 
-        if (krakenResponse != null && krakenResponse.Data != null)
+        if (krakenResponse is not null && krakenResponse.Data is not null)
         {
-            _logger.LogInformation("Finished processing {Request}, returning {Response}", requestName,
+            _logger.LogInformation("Finished processing {Request}, returning {Response}", request.Pathname,
                 typeof(TResponse).Name);
             return krakenResponse.Data;
         }
@@ -64,35 +58,34 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
         throw new InvalidKrakenRequestException(krakenResponse?.Errors);
     }
 
-    public async Task<TResponse> GetAsync<TRequest, TResponse>(TRequest request,
-        CancellationToken cancellationToken) where TRequest : PublicKrakenRequest
+    private async Task<HttpResponseMessage> ProcessRequest(PublicKrakenRequest request,
+        CancellationToken cancellationToken)
     {
-        var requestName = typeof(TRequest).Name;
-        _logger.LogInformation("Started processing GET {Request}", requestName);
-
         var inlinedParams = request.ToInlineParams();
-
         var requestUri = $"{request.Pathname}?{inlinedParams}";
 
         var response = await _client.GetAsync(requestUri, cancellationToken);
-        _logger.LogDebug("{Request} sent and response received (status_code={StatusCode})", requestName,
+        _logger.LogDebug("{Request} sent and response received (status_code={StatusCode})", request.Pathname,
             response.StatusCode);
 
-        response.EnsureSuccessStatusCode();
+        return response;
+    }
 
-        var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
-        var krakenResponse = JsonConvert.DeserializeObject<KrakenResponse<TResponse>>(responseContent);
-        _logger.LogDebug("{Request} content deserialized to {Response}", requestName, typeof(TResponse).Name);
+    private async Task<HttpResponseMessage> ProcessRequest(PrivateKrakenRequest request,
+        CancellationToken cancellationToken)
+    {
+        var signature = _signer.CreateSignature(request);
+        _logger.LogDebug("{Request} is private, signature created (signature={Signature})", request.Pathname,
+            signature);
+        _client.DefaultRequestHeaders.Add(ApiSign, signature);
 
-        if (krakenResponse != null && krakenResponse.Data != null)
-        {
-            _logger.LogInformation("Finished processing {Request}, returning {Response}", requestName,
-                typeof(TResponse).Name);
-            return krakenResponse.Data;
-        }
+        var inlinedParams = request.ToInlineParams();
+        var content = new StringContent(inlinedParams, Encoding.UTF8, "application/x-www-form-urlencoded");
 
-        _logger.LogError("Something went wrong while processing {Request} (errors={Errors})", typeof(TRequest).Name,
-            krakenResponse?.Errors);
-        throw new InvalidKrakenRequestException(krakenResponse?.Errors);
+        var response = await _client.PostAsync(request.Pathname, content, cancellationToken);
+        _logger.LogDebug("{Request} sent and response received (status_code={StatusCode})", request.Pathname,
+            response.StatusCode);
+
+        return response;
     }
 }

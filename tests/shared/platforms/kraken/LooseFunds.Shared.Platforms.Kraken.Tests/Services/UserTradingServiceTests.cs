@@ -37,7 +37,7 @@ public class UserTradingServiceTests
 
         var order = _fixture.Create<Order>();
         _krakenHttpClient
-            .Setup(x => x.PostAsync<AddOrder, Order>(It.IsAny<AddOrder>(), It.IsAny<CancellationToken>()))
+            .Setup(x => x.SendAsync<AddOrder, Order>(It.IsAny<AddOrder>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(order);
 
         //Act
@@ -47,7 +47,7 @@ public class UserTradingServiceTests
         result.Should().BeEquivalentTo(order);
 
         _krakenHttpClient.Verify(
-            x => x.PostAsync<AddOrder, Order>(It.Is<AddOrder>(o => o.Pair == pair && o.Volume == volume),
+            x => x.SendAsync<AddOrder, Order>(It.Is<AddOrder>(o => o.Pair == pair && o.Volume == volume),
                 cancellationToken), Times.Once);
     }
 
@@ -64,7 +64,7 @@ public class UserTradingServiceTests
 
         //Assert
         await act.Should().ThrowAsync<ValidationException>();
-        _krakenHttpClient.Verify(x => x.PostAsync<AddOrder, Order>(It.IsAny<AddOrder>(), It.IsAny<CancellationToken>()),
+        _krakenHttpClient.Verify(x => x.SendAsync<AddOrder, Order>(It.IsAny<AddOrder>(), It.IsAny<CancellationToken>()),
             Times.Never);
     }
 }

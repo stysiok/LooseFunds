@@ -11,6 +11,6 @@ internal sealed class UserDataService : IUserDataService
         => _client = client;
 
     public Task<IReadOnlyDictionary<string, decimal>> GetAccountBalanceAsync(CancellationToken cancellationToken)
-        => _client.PostAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(new(),
+        => _client.SendAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(new(),
             cancellationToken);
 }

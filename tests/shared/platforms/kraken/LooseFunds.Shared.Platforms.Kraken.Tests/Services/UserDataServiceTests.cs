@@ -33,7 +33,7 @@ public class UserDataServiceTests
 
         var balance = _fixture.Create<IReadOnlyDictionary<string, decimal>>();
         _krakenHttpClient
-            .Setup(x => x.PostAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(
+            .Setup(x => x.SendAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(
                 It.IsAny<GetAccountBalance>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(balance);
 
@@ -44,7 +44,7 @@ public class UserDataServiceTests
         result.Should().BeEquivalentTo(balance);
 
         _krakenHttpClient.Verify(
-            x => x.PostAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(It.IsAny<GetAccountBalance>(),
+            x => x.SendAsync<GetAccountBalance, IReadOnlyDictionary<string, decimal>>(It.IsAny<GetAccountBalance>(),
                 cancellationToken), Times.Once);
     }
 }

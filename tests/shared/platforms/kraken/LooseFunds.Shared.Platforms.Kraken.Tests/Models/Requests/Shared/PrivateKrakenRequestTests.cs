@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using AutoFixture;
 using FluentAssertions;
-using LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
+using LooseFunds.Shared.Platforms.Kraken.Tests.TestUtils;
 using NUnit.Framework;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Tests.Models.Requests.Shared;
@@ -65,12 +65,5 @@ public class PrivateKrakenRequestTests
 
         request3.Nonce.Should().BeGreaterThan(request1.Nonce);
         request3.Nonce.Should().BeGreaterThan(request2.Nonce);
-    }
-}
-
-internal record TestPrivateKrakenRequest : PrivateKrakenRequest
-{
-    public TestPrivateKrakenRequest(string pathname) : base(pathname)
-    {
     }
 }

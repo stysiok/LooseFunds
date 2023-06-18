@@ -1,6 +1,6 @@
 using AutoFixture;
 using FluentAssertions;
-using LooseFunds.Shared.Platforms.Kraken.Models.Requests.Shared;
+using LooseFunds.Shared.Platforms.Kraken.Tests.TestUtils;
 using NUnit.Framework;
 
 namespace LooseFunds.Shared.Platforms.Kraken.Tests.Models.Requests.Shared;
@@ -33,12 +33,5 @@ public class PublicKrakenRequestTests
 
         //Assert
         request.Pathname.Should().BeEquivalentTo(expected);
-    }
-}
-
-internal record TestPublicKrakenRequest : PublicKrakenRequest
-{
-    public TestPublicKrakenRequest(string pathname) : base(pathname)
-    {
     }
 }
