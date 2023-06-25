@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "toolbox", "toolbox", "{D89A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Shared.Toolbox", "src\shared\toolbox\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj", "{A07FEAF5-14B1-4644-A495-B49362F657FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor", "src\investor\LooseFunds.Investor\LooseFunds.Investor.csproj", "{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor.Api", "src\investor\LooseFunds.Investor.Api\LooseFunds.Investor.Api.csproj", "{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C7BC45C9-2F5C-4E2C-82F5-33442E01335D}"
 EndProject
@@ -30,6 +30,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "kraken", "kraken", "{A6C1974D-0DAF-483D-B5E1-7C8A3D7A07ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Shared.Platforms.Kraken.Tests", "tests\shared\platforms\kraken\LooseFunds.Shared.Platforms.Kraken.Tests\LooseFunds.Shared.Platforms.Kraken.Tests.csproj", "{0513E12B-07DC-4A5E-85FA-E8D435EF3BB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor.Application", "src\investor\LooseFunds.Investor.Application\LooseFunds.Investor.Application.csproj", "{599843FE-7CA1-45E2-A6CF-DCD78519770A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor.Core", "src\investor\LooseFunds.Investor.Core\LooseFunds.Investor.Core.csproj", "{AB6B2AA7-204C-4AE9-B934-B0640E7AFD76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor.Infrastructure", "src\investor\LooseFunds.Investor.Infrastructure\LooseFunds.Investor.Infrastructure.csproj", "{5F338583-4337-4F4C-B8B5-362F836034C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adapters", "adapters", "{5C81E547-0C82-4D07-9B06-B51A3D894837}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor.Adapters.Kraken", "src\investor\adapters\LooseFunds.Investor.Adapters.Kraken\LooseFunds.Investor.Adapters.Kraken.csproj", "{9046224F-7A29-4791-8339-F15D357A78D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor.Shared", "src\investor\LooseFunds.Investor.Shared\LooseFunds.Investor.Shared.csproj", "{26E62D7C-093E-49B9-9CD4-2C101D4054B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +68,26 @@ Global
 		{0513E12B-07DC-4A5E-85FA-E8D435EF3BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0513E12B-07DC-4A5E-85FA-E8D435EF3BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0513E12B-07DC-4A5E-85FA-E8D435EF3BB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{599843FE-7CA1-45E2-A6CF-DCD78519770A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{599843FE-7CA1-45E2-A6CF-DCD78519770A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{599843FE-7CA1-45E2-A6CF-DCD78519770A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{599843FE-7CA1-45E2-A6CF-DCD78519770A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB6B2AA7-204C-4AE9-B934-B0640E7AFD76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB6B2AA7-204C-4AE9-B934-B0640E7AFD76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB6B2AA7-204C-4AE9-B934-B0640E7AFD76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB6B2AA7-204C-4AE9-B934-B0640E7AFD76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F338583-4337-4F4C-B8B5-362F836034C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F338583-4337-4F4C-B8B5-362F836034C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F338583-4337-4F4C-B8B5-362F836034C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F338583-4337-4F4C-B8B5-362F836034C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9046224F-7A29-4791-8339-F15D357A78D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9046224F-7A29-4791-8339-F15D357A78D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9046224F-7A29-4791-8339-F15D357A78D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9046224F-7A29-4791-8339-F15D357A78D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E62D7C-093E-49B9-9CD4-2C101D4054B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E62D7C-093E-49B9-9CD4-2C101D4054B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E62D7C-093E-49B9-9CD4-2C101D4054B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E62D7C-093E-49B9-9CD4-2C101D4054B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{08F49F00-6E1A-44D9-8EE6-4D75400844C3} = {B09F441A-84EE-4504-88D6-5FE3042468FF}
@@ -70,5 +102,11 @@ Global
 		{E1CE4914-C438-44B0-AD58-6D8DEBCA7E2B} = {78508762-C309-4C21-82AC-70A72F75F598}
 		{A6C1974D-0DAF-483D-B5E1-7C8A3D7A07ED} = {E1CE4914-C438-44B0-AD58-6D8DEBCA7E2B}
 		{0513E12B-07DC-4A5E-85FA-E8D435EF3BB8} = {A6C1974D-0DAF-483D-B5E1-7C8A3D7A07ED}
+		{599843FE-7CA1-45E2-A6CF-DCD78519770A} = {8DEA0986-602B-4188-A37C-1570BA873F2F}
+		{AB6B2AA7-204C-4AE9-B934-B0640E7AFD76} = {8DEA0986-602B-4188-A37C-1570BA873F2F}
+		{5F338583-4337-4F4C-B8B5-362F836034C3} = {8DEA0986-602B-4188-A37C-1570BA873F2F}
+		{5C81E547-0C82-4D07-9B06-B51A3D894837} = {8DEA0986-602B-4188-A37C-1570BA873F2F}
+		{9046224F-7A29-4791-8339-F15D357A78D1} = {5C81E547-0C82-4D07-9B06-B51A3D894837}
+		{26E62D7C-093E-49B9-9CD4-2C101D4054B5} = {8DEA0986-602B-4188-A37C-1570BA873F2F}
 	EndGlobalSection
 EndGlobal
