@@ -3,7 +3,7 @@ using LooseFunds.Shared.Toolbox.Domain;
 
 namespace LooseFunds.Investor.Core.Domain;
 
-public sealed class Investment : Entity
+public sealed class Investment : DomainObject
 {
     public static Investment Create()
         => new Investment(Guid.NewGuid(), null);
