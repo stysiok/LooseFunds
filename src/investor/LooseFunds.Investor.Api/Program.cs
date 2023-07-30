@@ -1,12 +1,12 @@
+using LooseFunds.Investor.Application;
 using LooseFunds.Investor.Application.Handlers.CreateInvestment;
-using LooseFunds.Investor.Core.Repositories;
-using LooseFunds.Investor.Infrastructure.Repositories;
+using LooseFunds.Investor.Infrastructure;
 using LooseFunds.Shared.Platforms.Kraken;
 using LooseFunds.Shared.Platforms.Kraken.Models.Common;
 using LooseFunds.Shared.Platforms.Kraken.Services;
 using LooseFunds.Shared.Toolbox.Correlation;
 using LooseFunds.Shared.Toolbox.Logging;
-using LooseFunds.Shared.Toolbox.Storage;
+using LooseFunds.Shared.Toolbox.MediatR;
 using LooseFunds.Shared.Toolbox.UnitOfWork;
 using MediatR;
 
@@ -23,10 +23,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddKraken(builder.Configuration);
 builder.Services.AddCorrelationLogEnricher();
-builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(typeof(CreateInvestment).Assembly); });
-builder.Services.AddUnitOfWork();
-builder.Services.AddStorage(builder.Configuration, builder.Environment);
-builder.Services.AddScoped<IInvestmentRepository, InvestmentRepository>();
+builder.Services.AddUnitOfWork(builder.Configuration, builder.Environment);
+builder.Services.AddMediatR(typeof(ApplicationExtensions).Assembly);
+builder.Services.AddInfrastructure();
 
 builder.Host.UseLogging(builder.Configuration);
 

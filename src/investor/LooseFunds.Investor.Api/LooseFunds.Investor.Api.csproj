@@ -4,7 +4,6 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>LooseFunds.Investor</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,7 +13,6 @@
     <ItemGroup>
         <ProjectReference Include="..\..\shared\platforms\kraken\LooseFunds.Shared.Platforms.Kraken\LooseFunds.Shared.Platforms.Kraken.csproj"/>
         <ProjectReference Include="..\..\shared\toolbox\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj"/>
-        <ProjectReference Include="..\LooseFunds.Investor.Application\LooseFunds.Investor.Application.csproj"/>
         <ProjectReference Include="..\LooseFunds.Investor.Infrastructure\LooseFunds.Investor.Infrastructure.csproj"/>
     </ItemGroup>
 

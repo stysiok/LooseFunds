@@ -1,13 +1,15 @@
-using LooseFunds.Shared.Toolbox.Handler;
-using MediatR;
+using LooseFunds.Shared.Toolbox.Storage;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace LooseFunds.Shared.Toolbox.UnitOfWork;
 
 public static class UnitOfWorkExtensions
 {
-    public static void AddUnitOfWork(this IServiceCollection services)
+    public static void AddUnitOfWork(this IServiceCollection services, IConfiguration configuration,
+        IHostEnvironment environment)
         => services
-            .AddScoped<IUnitOfWork, UnitOfWork>()
-            .Decorate(typeof(INotificationHandler<>), typeof(UnitOfWorkNotificationHandler<>));
+            .AddStorage(configuration, environment)    
+            .AddScoped<IUnitOfWork, UnitOfWork>();
 }

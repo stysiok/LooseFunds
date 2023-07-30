@@ -1,5 +1,4 @@
-using LooseFunds.Shared.Toolbox.Core.Domain;
-using LooseFunds.Shared.Toolbox.Core.Entity;
+using LooseFunds.Shared.Toolbox.Core.Repository;
 using Marten;
 using MediatR;
 
@@ -9,7 +8,7 @@ internal sealed class UnitOfWork : IUnitOfWork
 {
     private readonly IDocumentStore _documentStore;
     private readonly IMediator _mediator;
-    private readonly HashSet<RepositoryBase> _repositories = new();
+    private readonly HashSet<IRepositoryBase> _repositories = new();
     private bool _storedAlready;
 
     public UnitOfWork(IDocumentStore documentStore, IMediator mediator)
@@ -18,7 +17,7 @@ internal sealed class UnitOfWork : IUnitOfWork
         _mediator = mediator;
     }
 
-    public void AddRepository(RepositoryBase repository)
+    public void AddRepository(IRepositoryBase repository)
     {
         _repositories.Add(repository);
     }
@@ -51,31 +50,8 @@ internal sealed class UnitOfWork : IUnitOfWork
 
         var documents = _repositories.SelectMany(r => r.ToDocument());
 
-        session.InsertObjects(documents);
+        session.StoreObjects(documents);
         await session.SaveChangesAsync(cancellationToken);
         _storedAlready = true;
     }
-}
-
-public abstract class RepositoryBase
-{
-    private readonly IUnitOfWork _unitOfWork;
-
-    public RepositoryBase(IUnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
-    }
-
-    protected HashSet<DomainObject> Tracked { get; } = new();
-
-    protected virtual void Track(DomainObject domainObject)
-    {
-        Tracked.Add(domainObject);
-        _unitOfWork.AddRepository(this);
-    }
-
-    protected internal virtual IDomainEvent? GetNextDomainEvent()
-        => Tracked.Select(domainObject => domainObject.TryGetNextDomainEvent()).FirstOrDefault();
-
-    protected internal abstract IEnumerable<Entity> ToDocument();
 }

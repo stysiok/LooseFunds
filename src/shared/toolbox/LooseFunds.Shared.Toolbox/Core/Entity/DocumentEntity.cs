@@ -1,7 +1,6 @@
 namespace LooseFunds.Shared.Toolbox.Core.Entity;
 
-//TODO rename to document
-public abstract class Entity
+public abstract class DocumentEntity
 {
     public Guid Id { get; set; }
 }

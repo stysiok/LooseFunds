@@ -9,7 +9,7 @@ namespace LooseFunds.Shared.Toolbox.Storage;
 
 public static class StorageExtensions
 {
-    public static void AddStorage(this IServiceCollection services, IConfiguration configuration,
+    public static IServiceCollection AddStorage(this IServiceCollection services, IConfiguration configuration,
         IHostEnvironment environment)
     {
         var connectionString = configuration.GetConnectionString("Marten") ??
@@ -26,5 +26,7 @@ public static class StorageExtensions
 
             if (environment.IsDevelopment()) options.AutoCreateSchemaObjects = AutoCreate.All;
         });
+
+        return services;
     }
 }

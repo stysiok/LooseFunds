@@ -1,14 +1,14 @@
 using LooseFunds.Shared.Toolbox.UnitOfWork;
 using MediatR;
 
-namespace LooseFunds.Shared.Toolbox.Handler;
+namespace LooseFunds.Shared.Toolbox.MediatR.Decorators;
 
-internal sealed class UnitOfWorkNotificationHandler<T> : INotificationHandler<T> where T : INotification
+internal sealed class UnitOfWorkNotificationHandlerDecorator<T> : INotificationHandler<T> where T : INotification
 {
     private readonly INotificationHandler<T> _handler;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UnitOfWorkNotificationHandler(INotificationHandler<T> handler, IUnitOfWork unitOfWork)
+    public UnitOfWorkNotificationHandlerDecorator(INotificationHandler<T> handler, IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
         _handler = handler;
