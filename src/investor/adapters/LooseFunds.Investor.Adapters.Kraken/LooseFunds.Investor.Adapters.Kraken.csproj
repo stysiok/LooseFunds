@@ -1,17 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\shared\platforms\kraken\LooseFunds.Shared.Platforms.Kraken\LooseFunds.Shared.Platforms.Kraken.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\shared\platforms\kraken\LooseFunds.Shared.Platforms.Kraken\LooseFunds.Shared.Platforms.Kraken.csproj" />
+    </ItemGroup>
 
 </Project>

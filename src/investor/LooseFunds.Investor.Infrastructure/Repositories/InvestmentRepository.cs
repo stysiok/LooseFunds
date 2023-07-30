@@ -9,7 +9,7 @@ namespace LooseFunds.Investor.Infrastructure.Repositories;
 
 public sealed class InvestmentRepository : RepositoryBase<Investment, InvestmentEntity>, IInvestmentRepository
 {
-    public InvestmentRepository(IDomainObjectConverter<Investment, InvestmentEntity> converter, IUnitOfWork unitOfWork) 
+    public InvestmentRepository(IDomainObjectConverter<Investment, InvestmentEntity> converter, IUnitOfWork unitOfWork)
         : base(converter, unitOfWork)
     {
     }

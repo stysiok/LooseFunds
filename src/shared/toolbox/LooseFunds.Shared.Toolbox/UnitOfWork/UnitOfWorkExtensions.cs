@@ -10,6 +10,6 @@ public static class UnitOfWorkExtensions
     public static void AddUnitOfWork(this IServiceCollection services, IConfiguration configuration,
         IHostEnvironment environment)
         => services
-            .AddStorage(configuration, environment)    
+            .AddStorage(configuration, environment)
             .AddScoped<IUnitOfWork, UnitOfWork>();
 }
