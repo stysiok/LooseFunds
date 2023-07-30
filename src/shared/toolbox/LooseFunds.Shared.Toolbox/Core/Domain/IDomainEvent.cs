@@ -1,8 +1,7 @@
 using MediatR;
 
-namespace LooseFunds.Shared.Toolbox.Domain;
+namespace LooseFunds.Shared.Toolbox.Core.Domain;
 
-//Marker interface
 public interface IDomainEvent : INotification
 {
 }
