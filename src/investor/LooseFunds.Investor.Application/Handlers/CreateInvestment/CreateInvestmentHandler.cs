@@ -1,5 +1,4 @@
 using LooseFunds.Investor.Core.Domain;
-using LooseFunds.Investor.Core.Domain.Events;
 using LooseFunds.Investor.Core.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -22,26 +21,9 @@ internal sealed record CreateInvestmentHandler : INotificationHandler<CreateInve
     public Task Handle(CreateInvestment notification, CancellationToken cancellationToken)
     {
         var investment = Investment.Create();
-        _logger.LogInformation("{Class} object create [id={Id}]", nameof(Investment), investment.Id);
 
         _investmentRepository.Save(investment);
 
-        return Task.CompletedTask;
-    }
-}
-
-internal sealed class CollectAvailablePairs : INotificationHandler<InvestmentCreated>
-{
-    private readonly ILogger<CollectAvailablePairs> _logger;
-
-    public CollectAvailablePairs(ILogger<CollectAvailablePairs> logger)
-    {
-        _logger = logger;
-    }
-
-    public Task Handle(InvestmentCreated notification, CancellationToken cancellationToken)
-    {
-        _logger.LogInformation("woop woop 🥳");
         return Task.CompletedTask;
     }
 }

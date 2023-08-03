@@ -4,14 +4,12 @@ public abstract class DomainObject
 {
     private readonly Queue<IDomainEvent> _domainEvents = new();
 
-    protected DomainObject(Guid id, long? version)
+    protected DomainObject(Guid id)
     {
         Id = id;
-        Version = version;
     }
 
     public Guid Id { get; private init; }
-    public long? Version { get; private init; }
 
     protected void AddDomainEvent(IDomainEvent domainEvent) => _domainEvents.Enqueue(domainEvent);
 
