@@ -10,6 +10,9 @@ public static class MediatRExtensions
     public static void AddMediatR(this IServiceCollection services, Assembly assembly)
     {
         services.AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(assembly); });
-        services.Decorate(typeof(INotificationHandler<>), typeof(UnitOfWorkNotificationHandlerDecorator<>));
+
+        services
+            .Decorate(typeof(INotificationHandler<>), typeof(LoggingNotificationHandlerDecorator<>))
+            .Decorate(typeof(INotificationHandler<>), typeof(UnitOfWorkNotificationHandlerDecorator<>));
     }
 }
