@@ -15,4 +15,7 @@ public sealed class InvestmentRepository : RepositoryBase<Investment, Investment
     }
 
     public void Save(Investment investment) => Track(investment);
+
+    public new Task<Investment> GetAsync(Guid id, CancellationToken cancellationToken)
+        => base.GetAsync(id, cancellationToken);
 }

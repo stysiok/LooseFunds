@@ -9,6 +9,7 @@ public sealed class InvestmentDomainObjectConverter : IDomainObjectConverter<Inv
     public InvestmentEntity ToDocumentEntity(Investment domain)
         => new()
         {
-            Id = domain.Id
+            Id = domain.Id,
+            BudgetInPennies = domain.Budget.AmountInPennies
         };
 }

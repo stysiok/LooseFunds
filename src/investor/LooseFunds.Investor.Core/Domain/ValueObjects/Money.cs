@@ -11,6 +11,7 @@ public sealed class Money
 
     public Money(decimal amount) : this()
     {
+        amount = Math.Round(amount, 2, MidpointRounding.ToEven);
         Amount = amount;
         AmountInPennies = (uint)(amount * 100);
     }

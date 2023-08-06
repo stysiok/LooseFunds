@@ -1,3 +1,4 @@
+using LooseFunds.Investor.Adapters.Kraken;
 using LooseFunds.Investor.Application;
 using LooseFunds.Investor.Application.Handlers.CreateInvestment;
 using LooseFunds.Investor.Infrastructure;
@@ -22,6 +23,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddKraken(builder.Configuration);
+builder.Services.AddKrakenAdapter(builder.Configuration);
 builder.Services.AddCorrelationLogEnricher();
 builder.Services.AddUnitOfWork(builder.Configuration, builder.Environment);
 builder.Services.AddMediatR(typeof(ApplicationExtensions).Assembly);

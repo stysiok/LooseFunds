@@ -31,4 +31,12 @@ public abstract class RepositoryBase<TDomain, TEntity> : IRepositoryBase
         _tracked.Add(domainObject);
         _unitOfWork.AddRepository(this);
     }
+
+    protected Task<TDomain> GetAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var domainObject = _tracked.FirstOrDefault(o => o.Id.Equals(id));
+        if (domainObject is not null) return Task.FromResult((TDomain)domainObject);
+
+        throw new Exception();
+    }
 }

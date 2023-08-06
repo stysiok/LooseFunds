@@ -7,17 +7,22 @@ namespace LooseFunds.Investor.Core.Domain;
 
 public sealed class Investment : DomainObject
 {
-    public DateTime Created { get; }
-    public Money Budget { get; }
-    public ImmutableArray<Cryptocurrency> Available { get; }
-    public ImmutableArray<Cryptocurrency> Affordable { get; }
-    public Cryptocurrency Picked { get; }
-
     private Investment(Guid id) : base(id)
     {
         AddDomainEvent(new InvestmentCreated(id));
     }
 
+    public DateTime Created { get; }
+    public Money Budget { get; private set; }
+    public ImmutableArray<Cryptocurrency> Available { get; }
+    public ImmutableArray<Cryptocurrency> Affordable { get; }
+    public Cryptocurrency Picked { get; }
+
     public static Investment Create()
         => new(Guid.NewGuid());
+
+    public void SetBudget(Money budget)
+    {
+        Budget = budget;
+    }
 }
