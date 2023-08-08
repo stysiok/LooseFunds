@@ -24,4 +24,9 @@ internal sealed class MarketDataService : IMarketDataService
         CancellationToken cancellationToken)
         => _client.SendAsync<GetTickerInformation, IReadOnlyDictionary<string, Ticker>>(new(pairs),
             cancellationToken);
+
+    public Task<IReadOnlyDictionary<string, AssetPair>> GetTradableAssetPairAsync(IList<Pair> pairs,
+        CancellationToken cancellationToken)
+        => _client.SendAsync<GetTradableAssetPair, IReadOnlyDictionary<string, AssetPair>>(new(pairs),
+            cancellationToken);
 }

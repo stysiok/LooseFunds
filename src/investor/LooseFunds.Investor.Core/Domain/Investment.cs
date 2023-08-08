@@ -11,11 +11,10 @@ public sealed class Investment : DomainObject
     {
         AddDomainEvent(new InvestmentCreated(id));
     }
-
-    public DateTime Created { get; }
+    
     public Money Budget { get; private set; }
-    public ImmutableArray<Cryptocurrency> Available { get; }
-    public ImmutableArray<Cryptocurrency> Affordable { get; }
+    public IImmutableList<Cryptocurrency> Available { get; private set; }
+    public IImmutableList<Cryptocurrency> Affordable { get; private set; }
     public Cryptocurrency Picked { get; }
 
     public static Investment Create()
@@ -24,5 +23,15 @@ public sealed class Investment : DomainObject
     public void SetBudget(Money budget)
     {
         Budget = budget;
+
+        AddDomainEvent(new BudgetSet(Id));
+    }
+
+    public void SetCryptocurrencies(IImmutableList<Cryptocurrency> cryptocurrencies)
+    {
+        Available = ImmutableList.CreateRange(cryptocurrencies);
+        Affordable = cryptocurrencies.Where(c => c.MinimalFractionPrice <= Budget).ToImmutableList();
+
+        AddDomainEvent(new CryptocurrenciesSet(Id));
     }
 }

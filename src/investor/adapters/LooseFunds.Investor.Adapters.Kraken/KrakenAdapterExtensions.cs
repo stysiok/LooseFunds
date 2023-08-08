@@ -12,5 +12,6 @@ public static class KrakenAdapterExtensions
         services.AddKraken(configuration);
 
         services.AddScoped<IBudgetService, BudgetService>();
+        services.AddScoped<ICryptocurrencyService, CryptocurrencyService>();
     }
 }

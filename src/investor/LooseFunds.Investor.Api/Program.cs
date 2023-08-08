@@ -63,7 +63,7 @@ app.MapGet("/balance",
 
 app.MapGet("/ticker",
     async (IMarketDataService marketDataService, CancellationToken cancellationToken) =>
-        await marketDataService.GetTickerInfoAsync(new List<Pair> { Pair.XBTUSD, Pair.ETHUSD }, cancellationToken));
+        await marketDataService.GetTickerInfoAsync(Enum.GetValues<Pair>(), cancellationToken));
 
 app.MapGet("/uow",
     async (IMediator mediator, CancellationToken cancellationToken) =>

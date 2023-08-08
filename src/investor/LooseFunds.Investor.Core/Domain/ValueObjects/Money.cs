@@ -27,6 +27,12 @@ public sealed class Money
 
     public static Money operator *(Money money, double fraction)
         => new Money(money.Amount * (decimal)fraction);
+
+    public static bool operator <=(Money left, Money right)
+        => left.AmountInPennies <= right.AmountInPennies;
+
+    public static bool operator >=(Money left, Money right)
+        => left.AmountInPennies >= right.AmountInPennies;
 }
 
 internal sealed class MoneyValidator : AbstractValidator<Money>

@@ -10,6 +10,10 @@ public sealed class InvestmentDomainObjectConverter : IDomainObjectConverter<Inv
         => new()
         {
             Id = domain.Id,
-            BudgetInPennies = domain.Budget.AmountInPennies
+            BudgetInPennies = domain.Budget.AmountInPennies,
+            AvailableCryptocurrencies = domain.Available.Select(a =>
+                new CryptocurrencyEntity(a.Coin.ToString(), a.Price.AmountInPennies, a.MinimalFraction)).ToArray(),
+            AffordableCryptocurrencies = domain.Affordable.Select(a =>
+                new CryptocurrencyEntity(a.Coin.ToString(), a.Price.AmountInPennies, a.MinimalFraction)).ToArray()
         };
 }

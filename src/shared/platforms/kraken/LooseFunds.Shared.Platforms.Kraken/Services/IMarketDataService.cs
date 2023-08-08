@@ -12,4 +12,7 @@ public interface IMarketDataService
 
     Task<IReadOnlyDictionary<string, Ticker>> GetTickerInfoAsync(IList<Pair> pairs,
         CancellationToken cancellationToken);
+
+    Task<IReadOnlyDictionary<string, AssetPair>> GetTradableAssetPairAsync(IList<Pair> pairs,
+        CancellationToken cancellationToken);
 }

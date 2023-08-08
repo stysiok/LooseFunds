@@ -7,20 +7,17 @@ public sealed record Cryptocurrency
 {
     public Coin Coin { get; }
     public Money Price { get; }
-    public double Fraction { get; }
-    public Money FractionPrice { get; }
+    public double MinimalFraction { get; }
+    public Money MinimalFractionPrice { get; }
 
-    private Cryptocurrency()
-    {
-        new CryptocurrencyValidator().ValidateAndThrow(this);
-    }
-    
-    public Cryptocurrency(Coin coin, Money price, double fraction) : this()
+    public Cryptocurrency(Coin coin, Money price, double minimalFraction)
     {
         Coin = coin;
         Price = price;
-        Fraction = fraction;
-        FractionPrice = price * fraction;
+        MinimalFraction = minimalFraction;
+        MinimalFractionPrice = price * minimalFraction;
+
+        new CryptocurrencyValidator().ValidateAndThrow(this);
     }
 }
 
@@ -30,6 +27,6 @@ internal sealed class CryptocurrencyValidator : AbstractValidator<Cryptocurrency
     
     public CryptocurrencyValidator()
     {
-        RuleFor(x => x.Fraction).GreaterThan(MinimalFractionSize);
+        RuleFor(x => x.MinimalFraction).GreaterThan(MinimalFractionSize);
     }
 }
