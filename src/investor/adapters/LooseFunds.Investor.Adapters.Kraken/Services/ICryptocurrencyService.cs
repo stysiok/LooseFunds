@@ -6,4 +6,5 @@ namespace LooseFunds.Investor.Adapters.Kraken.Services;
 public interface ICryptocurrencyService
 {
     Task<IImmutableList<Cryptocurrency>> GetCryptocurrenciesAsync(CancellationToken cancellationToken);
+    Task<string> BuyCryptocurrencyAsync(Cryptocurrency cryptocurrency, CancellationToken cancellationToken);
 }

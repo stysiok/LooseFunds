@@ -10,10 +10,12 @@ namespace LooseFunds.Investor.Adapters.Kraken.Services;
 internal sealed class CryptocurrencyService : ICryptocurrencyService
 {
     private readonly IMarketDataService _marketDataService;
+    private readonly IUserTradingService _userTradingService;
 
-    public CryptocurrencyService(IMarketDataService marketDataService)
+    public CryptocurrencyService(IMarketDataService marketDataService, IUserTradingService userTradingService)
     {
         _marketDataService = marketDataService;
+        _userTradingService = userTradingService;
     }
 
     public async Task<IImmutableList<Cryptocurrency>> GetCryptocurrenciesAsync(CancellationToken cancellationToken)
@@ -26,9 +28,17 @@ internal sealed class CryptocurrencyService : ICryptocurrencyService
         {
             var coin = CoinPairMapper.ToCoin(Enum.Parse<Pair>(t.Key));
             var price = decimal.Parse(t.Value.LastTradeClosed[0]);
-            var fraction = double.Parse(minOrders[t.Key].MinimumOrder);
+            var fraction = decimal.Parse(minOrders[t.Key].MinimumOrder);
 
             return new Cryptocurrency(coin, new Money(price), fraction);
         }).ToImmutableList();
+    }
+
+    public async Task<string> BuyCryptocurrencyAsync(Cryptocurrency cryptocurrency, CancellationToken cancellationToken)
+    {
+        var pair = CoinPairMapper.ToPair(cryptocurrency.Coin);
+        var order = await _userTradingService.AddOrderAsync(pair, cryptocurrency.MinimalFraction, cancellationToken);
+
+        return order.TransactionsIds.Single();
     }
 }

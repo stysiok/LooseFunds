@@ -25,8 +25,8 @@ public sealed class Money
     public decimal Amount { get; }
     public uint AmountInPennies { get; }
 
-    public static Money operator *(Money money, double fraction)
-        => new Money(money.Amount * (decimal)fraction);
+    public static Money operator *(Money money, decimal fraction)
+        => new Money(money.Amount * fraction);
 
     public static bool operator <=(Money left, Money right)
         => left.AmountInPennies <= right.AmountInPennies;

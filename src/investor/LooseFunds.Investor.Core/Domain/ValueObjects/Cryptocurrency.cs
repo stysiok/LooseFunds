@@ -7,10 +7,10 @@ public sealed record Cryptocurrency
 {
     public Coin Coin { get; }
     public Money Price { get; }
-    public double MinimalFraction { get; }
+    public decimal MinimalFraction { get; }
     public Money MinimalFractionPrice { get; }
 
-    public Cryptocurrency(Coin coin, Money price, double minimalFraction)
+    public Cryptocurrency(Coin coin, Money price, decimal minimalFraction)
     {
         Coin = coin;
         Price = price;
