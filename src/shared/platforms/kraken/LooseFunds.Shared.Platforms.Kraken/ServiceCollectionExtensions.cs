@@ -1,16 +1,19 @@
 using FluentValidation;
 using LooseFunds.Shared.Platforms.Kraken.Clients;
 using LooseFunds.Shared.Platforms.Kraken.Services;
+using LooseFunds.Shared.Platforms.Kraken.Services.Fakes;
 using LooseFunds.Shared.Platforms.Kraken.Settings;
 using LooseFunds.Shared.Platforms.Kraken.Utils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace LooseFunds.Shared.Platforms.Kraken;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddKraken(this IServiceCollection services, IConfiguration configuration)
+    public static void AddKraken(this IServiceCollection services, IConfiguration configuration,
+        IHostEnvironment environment)
     {
         var krakenConfigurationSection = configuration.GetRequiredSection(KrakenSettingsConsts.SectionName);
 
@@ -22,8 +25,12 @@ public static class ServiceCollectionExtensions
             .AddSingleton<IPrivateRequestSigner, PrivateRequestSigner>()
             .AddScoped<IMarketDataService, MarketDataService>()
             .AddScoped<IUserDataService, UserDataService>()
-            .AddScoped<IUserTradingService, UserTradingService>()
             .AddHttpClient<IKrakenHttpClient, KrakenHttpClient>();
+
+        if (environment.IsProduction())
+            services.AddScoped<IUserTradingService, UserTradingService>();
+        else
+            services.AddScoped<IUserTradingService, FakeUserTradingService>();
     }
 
     private static void VerifyKrakenOptions(IConfiguration configurationSection)
