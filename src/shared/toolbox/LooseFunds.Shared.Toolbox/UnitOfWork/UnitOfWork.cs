@@ -1,6 +1,7 @@
 using LooseFunds.Shared.Toolbox.Core.Repository;
 using Marten;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace LooseFunds.Shared.Toolbox.UnitOfWork;
 
@@ -8,18 +9,25 @@ internal sealed class UnitOfWork : IUnitOfWork
 {
     private readonly IDocumentStore _documentStore;
     private readonly IMediator _mediator;
+    private readonly ILogger<UnitOfWork> _logger;
     private readonly HashSet<IRepositoryBase> _repositories = new();
     private bool _storedAlready;
 
-    public UnitOfWork(IDocumentStore documentStore, IMediator mediator)
+    public UnitOfWork(IDocumentStore documentStore, IMediator mediator, ILogger<UnitOfWork> logger)
     {
         _documentStore = documentStore;
         _mediator = mediator;
+        _logger = logger;
     }
 
     public void AddRepository(IRepositoryBase repository)
     {
-        _repositories.Add(repository);
+        var repositoryName = repository.GetType().Name;
+
+        var wasAdded = _repositories.Add(repository);
+        if (wasAdded is false) _logger.LogError("Repository {Object} was not added to repositories", repositoryName);
+
+        _logger.LogDebug("Repository {Object} added to the repositories", repositoryName);
     }
 
     public async Task CommitAsync(CancellationToken cancellationToken = default)

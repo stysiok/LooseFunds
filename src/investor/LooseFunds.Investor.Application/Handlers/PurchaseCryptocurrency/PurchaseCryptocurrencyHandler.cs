@@ -1,4 +1,5 @@
 using LooseFunds.Investor.Adapters.Kraken.Services;
+using LooseFunds.Investor.Core.Domain;
 using LooseFunds.Investor.Core.Domain.Events;
 using LooseFunds.Investor.Core.Repositories;
 using MediatR;
@@ -26,5 +27,7 @@ internal sealed class PurchaseCryptocurrencyHandler : INotificationHandler<Crypt
         var transactionId =
             await _cryptocurrencyService.BuyCryptocurrencyAsync(investment.Picked, cancellationToken);
         investment.SetTransactionId(transactionId);
+        _logger.LogInformation("Set {Property} on {Object} [id={Id}, transaction_id={TransactionId}]",
+            nameof(investment.TransactionId), nameof(Investment), investment.Id, investment.TransactionId);
     }
 }

@@ -21,6 +21,7 @@ internal sealed record CreateInvestmentHandler : INotificationHandler<CreateInve
     public Task Handle(CreateInvestment notification, CancellationToken cancellationToken)
     {
         var investment = Investment.Create();
+        _logger.LogInformation("Created {Object} [id={Id}]", nameof(Investment), investment.Id);
 
         _investmentRepository.Save(investment);
 
