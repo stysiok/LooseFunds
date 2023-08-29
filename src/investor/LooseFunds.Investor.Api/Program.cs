@@ -4,6 +4,7 @@ using LooseFunds.Investor.Application.Handlers.CreateInvestment;
 using LooseFunds.Investor.Infrastructure;
 using LooseFunds.Shared.Platforms.Kraken.Models.Common;
 using LooseFunds.Shared.Platforms.Kraken.Services;
+using LooseFunds.Shared.Toolbox.Configuration;
 using LooseFunds.Shared.Toolbox.Correlation;
 using LooseFunds.Shared.Toolbox.Logging;
 using LooseFunds.Shared.Toolbox.MediatR;
@@ -12,11 +13,7 @@ using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration
-    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-    .AddJsonFile("appsettings.json", false, true)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true)
-    .AddEnvironmentVariables();
+builder.Configuration.AddConfigurations(builder.Environment);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
