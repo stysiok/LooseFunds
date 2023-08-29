@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Shared.Platforms
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "investor", "investor", "{8DEA0986-602B-4188-A37C-1570BA873F2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Shared.Toolbox", "src\shared\toolbox\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj", "{A07FEAF5-14B1-4644-A495-B49362F657FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Shared.Toolbox", "src\shared\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj", "{A07FEAF5-14B1-4644-A495-B49362F657FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LooseFunds.Investor.Api", "src\investor\LooseFunds.Investor.Api\LooseFunds.Investor.Api.csproj", "{A640E7F1-FB70-4910-8A3C-E8D9D31AD8C2}"
 EndProject
