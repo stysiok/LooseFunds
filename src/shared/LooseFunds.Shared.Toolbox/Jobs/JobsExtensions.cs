@@ -6,10 +6,11 @@ namespace LooseFunds.Shared.Toolbox.Jobs;
 
 public static class JobsExtensions
 {
-    public static void AddJobs(this IServiceCollection services)
+    public static IServiceCollection AddJobs(this IServiceCollection services)
     {
         services.AddQuartz();
         services.AddQuartzHostedService(q => { q.WaitForJobsToComplete = true; });
+        return services;
     }
 
     public static async Task ScheduleJobAsync<TJob>(this WebApplication webApplication) where TJob : IJob
@@ -30,7 +31,7 @@ public static class JobsExtensions
         var trigger = TriggerBuilder.Create()
             .WithIdentity(triggerName, group)
             .StartNow()
-            .WithSimpleSchedule(x => x.RepeatForever().WithIntervalInSeconds(4))
+            .WithSimpleSchedule(x => x.RepeatForever().WithIntervalInHours(4))
             .Build();
 
         await scheduler.ScheduleJob(job, trigger);

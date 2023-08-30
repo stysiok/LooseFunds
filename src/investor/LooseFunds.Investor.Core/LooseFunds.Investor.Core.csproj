@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\shared\toolbox\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj"/>
+        <ProjectReference Include="..\..\shared\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj"/>
     </ItemGroup>
 
 </Project>
