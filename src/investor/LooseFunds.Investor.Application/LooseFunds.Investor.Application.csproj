@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\shared\LooseFunds.Shared.Contracts\LooseFunds.Shared.Contracts.csproj"/>
         <ProjectReference Include="..\adapters\LooseFunds.Investor.Adapters.Kraken\LooseFunds.Investor.Adapters.Kraken.csproj"/>
         <ProjectReference Include="..\LooseFunds.Investor.Core\LooseFunds.Investor.Core.csproj"/>
     </ItemGroup>

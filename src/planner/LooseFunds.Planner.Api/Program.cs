@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddCorrelationLogEnricher()
     .AddJobs()
-    .AddMessaging();
+    .AddMessaging(builder.Configuration);
     
 
 builder.Host.UseLogging(builder.Configuration);

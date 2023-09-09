@@ -31,7 +31,7 @@ public static class JobsExtensions
         var trigger = TriggerBuilder.Create()
             .WithIdentity(triggerName, group)
             .StartNow()
-            .WithSimpleSchedule(x => x.RepeatForever().WithIntervalInHours(4))
+            .WithSimpleSchedule(x => x.RepeatForever().WithIntervalInSeconds(10))
             .Build();
 
         await scheduler.ScheduleJob(job, trigger);

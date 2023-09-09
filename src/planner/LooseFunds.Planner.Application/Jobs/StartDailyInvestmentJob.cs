@@ -1,3 +1,4 @@
+using LooseFunds.Shared.Contracts.Investor;
 using LooseFunds.Shared.Toolbox.Messaging;
 using Microsoft.Extensions.Logging;
 using Quartz;
@@ -17,7 +18,10 @@ public sealed class StartDailyInvestmentJob : IJob
 
     public async Task Execute(IJobExecutionContext context)
     {
-        _logger.LogInformation("Send new create investment at {now}", DateTime.Now);
-        await _messagePublisher.PublishAsync(new Rubbish(), context.CancellationToken);
+        _logger.LogInformation("Publishing message [message_type={MessageType}]", nameof(CreateInvestmentCommand));
+
+        await _messagePublisher.PublishAsync(CreateInvestmentCommand.BuildMessage(), context.CancellationToken);
+
+        _logger.LogInformation("Published message [message_type={MessageType}]", nameof(CreateInvestmentCommand));
     }
 }

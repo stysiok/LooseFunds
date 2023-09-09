@@ -11,4 +11,9 @@
     <PackageReference Include="MediatR.Contracts" Version="2.0.1"/>
   </ItemGroup>
 
+
+    <ItemGroup>
+        <ProjectReference Include="..\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj"/>
+    </ItemGroup>
+
 </Project>

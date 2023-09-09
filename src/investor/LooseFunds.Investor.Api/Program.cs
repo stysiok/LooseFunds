@@ -8,6 +8,7 @@ using LooseFunds.Shared.Toolbox.Configuration;
 using LooseFunds.Shared.Toolbox.Correlation;
 using LooseFunds.Shared.Toolbox.Logging;
 using LooseFunds.Shared.Toolbox.MediatR;
+using LooseFunds.Shared.Toolbox.Messaging;
 using LooseFunds.Shared.Toolbox.UnitOfWork;
 using MediatR;
 
@@ -22,7 +23,9 @@ builder.Services.AddKrakenAdapter(builder.Configuration, builder.Environment);
 builder.Services.AddCorrelationLogEnricher();
 builder.Services.AddUnitOfWork(builder.Configuration, builder.Environment);
 builder.Services.AddMediatR(typeof(ApplicationExtensions).Assembly);
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+builder.Services.AddMessaging(builder.Configuration);
 
 builder.Host.UseLogging(builder.Configuration);
 
