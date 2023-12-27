@@ -1,5 +1,6 @@
 using LooseFunds.Shared.Contracts.Investor;
 using LooseFunds.Shared.Toolbox.Messaging;
+using LooseFunds.Shared.Toolbox.Messaging.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -22,6 +23,7 @@ internal sealed class CreateInvestmentSubscriber : BackgroundService
             command =>
             {
                 _logger.LogInformation("Message received [message_type={MessageType}]", command.GetType().Name);
+                return Task.CompletedTask;
             }, stoppingToken);
 
         return Task.CompletedTask;

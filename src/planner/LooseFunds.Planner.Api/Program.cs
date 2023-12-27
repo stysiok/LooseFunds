@@ -7,7 +7,7 @@ using LooseFunds.Shared.Toolbox.Messaging;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddCorrelationLogEnricher()
+    .AddCorrelation()
     .AddJobs()
     .AddMessaging(builder.Configuration);
     

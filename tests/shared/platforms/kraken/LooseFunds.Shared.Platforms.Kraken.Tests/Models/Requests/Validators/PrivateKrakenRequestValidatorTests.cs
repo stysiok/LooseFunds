@@ -18,7 +18,7 @@ public class PrivateKrakenRequestValidatorTests
     public void PrivateKrakenRequestValidator_returns_valid_for_valid_private_request()
     {
         //Arrange
-        var privateKrakenRequest = new AddOrder(OrderType.limit, Type.buy, 10m, Pair.XBTUSD) { Nonce = 123321 };
+        var privateKrakenRequest = new AddOrder(OrderType.limit, Type.buy, 10m, Pair.XXBTZEUR) { Nonce = 123321 };
 
         //Act
         var result = _validator.Validate(privateKrakenRequest);
@@ -33,7 +33,7 @@ public class PrivateKrakenRequestValidatorTests
     public void PrivateKrakenRequestValidator_validates_if_nonce_is_greater_than_zero(long nonce)
     {
         //Arrange
-        var privateKrakenRequest = new AddOrder(OrderType.limit, Type.buy, 10m, Pair.XBTUSD) { Nonce = nonce };
+        var privateKrakenRequest = new AddOrder(OrderType.limit, Type.buy, 10m, Pair.XXBTZEUR) { Nonce = nonce };
 
         //Act
         var result = _validator.Validate(privateKrakenRequest);

@@ -11,11 +11,31 @@ internal sealed class CorrelationMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         var hasCorrelationIdHeader = context.Request.Headers.ContainsKey(CorrelationConsts.CorrelationHeader);
-        if (!hasCorrelationIdHeader)
-            context.Request.Headers.Add(CorrelationConsts.CorrelationHeader, GenerateCorrelationId());
+        if (hasCorrelationIdHeader is false)
+            context.Request.Headers.Add(CorrelationConsts.CorrelationHeader, Guid.NewGuid().ToString("N"));
 
         await _next(context);
     }
+}
 
-    private static string GenerateCorrelationId() => Guid.NewGuid().ToString("N");
+internal interface ICorrelationAccessor
+{
+    string CorrelationId { get; }
+}
+
+internal interface ICorrelationSetter
+{
+    void Set(Guid correlationId);
+}
+
+internal sealed class CorrelationContainer : ICorrelationAccessor, ICorrelationSetter
+{
+    private string? _correlationId;
+
+    public string CorrelationId => _correlationId ?? throw new Exception();
+
+    public void Set(Guid correlationId)
+    {
+        _correlationId = correlationId.ToString("N");
+    }
 }

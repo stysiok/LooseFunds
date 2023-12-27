@@ -1,3 +1,4 @@
+using LooseFunds.Shared.Toolbox.Messaging.Memphis;
 using Memphis.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

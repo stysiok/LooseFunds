@@ -8,7 +8,7 @@ public static class CorrelationExtensions
     public static IApplicationBuilder UseCorrelationId(this IApplicationBuilder builder)
         => builder.UseMiddleware<CorrelationMiddleware>();
 
-    public static IServiceCollection AddCorrelationLogEnricher(this IServiceCollection services)
+    public static IServiceCollection AddCorrelation(this IServiceCollection services)
         => services.AddHttpContextAccessor()
             .AddSingleton<CorrelationLogEnricher>();
 }

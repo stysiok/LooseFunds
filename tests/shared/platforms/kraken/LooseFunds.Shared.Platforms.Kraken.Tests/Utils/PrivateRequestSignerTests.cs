@@ -30,7 +30,7 @@ public class PrivateRequestSignerTests
     public void CreateSignature_returns_valid_signature()
     {
         //Arrange
-        AddOrder request = new(OrderType.limit, Type.buy, 1.25m, Pair.XBTUSD, 37500) { Nonce = 1616492376594 };
+        AddOrder request = new(OrderType.limit, Type.buy, 1.25m, Pair.XXBTZEUR, 37500) { Nonce = 1616492376594 };
 
         const string expectedSignature =
             "4/dpxb3iT4tp/ZCVEwSnEsLxx0bqyhLpdfOpc6fn7OR8+UClSV5n9E6aSS8MPtnRfp32bAb0nmbRn6H8ndwLUQ==";

@@ -18,7 +18,7 @@ public class AddOrderRequestValidatorTests
     public void KrakenRequestValidator_returns_valid_for_valid_request(decimal volume, int? price)
     {
         //Arrange
-        var addOrderRequest = new AddOrder(OrderType.limit, Type.buy, volume, Pair.XBTUSD, price);
+        var addOrderRequest = new AddOrder(OrderType.limit, Type.buy, volume, Pair.XXBTZEUR, price);
 
         //Act
         var result = _validator.Validate(addOrderRequest);
@@ -35,7 +35,7 @@ public class AddOrderRequestValidatorTests
         //Arrange & Act & Assert
         Assert.Throws<ValidationException>(() =>
         {
-            var _ = new AddOrder(OrderType.limit, Type.buy, volume, Pair.XBTUSD);
+            var _ = new AddOrder(OrderType.limit, Type.buy, volume, Pair.XXBTZEUR);
         });
     }
 
@@ -45,7 +45,7 @@ public class AddOrderRequestValidatorTests
         //Arrange & Act & Assert
         Assert.Throws<ValidationException>(() =>
         {
-            var _ = new AddOrder(OrderType.limit, Type.buy, 123.32m, Pair.XBTUSD, -1012);
+            var _ = new AddOrder(OrderType.limit, Type.buy, 123.32m, Pair.XXBTZEUR, -1012);
         });
     }
 }

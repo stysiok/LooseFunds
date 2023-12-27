@@ -17,7 +17,7 @@ public class AddOrderTests
         const OrderType orderType = OrderType.market;
         const Type type = Type.buy;
         const decimal volume = 10.21m;
-        const Pair pair = Pair.XBTUSD;
+        const Pair pair = Pair.XXBTZEUR;
         const int price = 1200;
 
         //Act
@@ -32,8 +32,8 @@ public class AddOrderTests
         request.Price.Should().Be(price);
     }
 
-    [TestCase(-123.23, Pair.XBTUSD, 100)]
-    [TestCase(1233.312, Pair.XBTUSD, -100)]
+    [TestCase(-123.23, Pair.XXBTZEUR, 100)]
+    [TestCase(1233.312, Pair.XXBTZEUR, -100)]
     public void AddOrder_throws_exception_when_parameter_is_invalid(decimal volume, Pair pair, int price)
     {
         //Act & Assert
