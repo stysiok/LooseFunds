@@ -8,7 +8,7 @@ public sealed class InvestmentEntity : DocumentEntity
     public CryptocurrencyEntity[] AvailableCryptocurrencies { get; init; } = null!;
     public CryptocurrencyEntity[] AffordableCryptocurrencies { get; init; } = null!;
     public CryptocurrencyEntity Picked { get; init; } = null!;
-    public string TransactionId { get; init; } = null!;
+    public string? TransactionId { get; init; } = null!;
 }
 
 public sealed record CryptocurrencyEntity(string Coin, decimal Price, decimal MinimalFraction);

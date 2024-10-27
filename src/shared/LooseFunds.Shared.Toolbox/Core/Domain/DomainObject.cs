@@ -13,6 +13,13 @@ public abstract class DomainObject
 
     protected void AddDomainEvent(IDomainEvent domainEvent) => _domainEvents.Enqueue(domainEvent);
 
+    protected static void CheckFor(BusinessRule businessRule)
+    {
+        if (businessRule.Validate()) return;
+
+        throw new BusinessRuleException(businessRule);
+    }
+
     internal IDomainEvent? TryGetNextDomainEvent()
         => _domainEvents.TryDequeue(out var domainEvent) ? domainEvent : null;
 }

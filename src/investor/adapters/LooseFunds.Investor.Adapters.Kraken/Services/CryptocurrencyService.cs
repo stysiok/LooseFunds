@@ -47,7 +47,8 @@ internal sealed class CryptocurrencyService : ICryptocurrencyService
         }).ToImmutableList();
     }
 
-    public async Task<string> BuyCryptocurrencyAsync(Cryptocurrency cryptocurrency, CancellationToken cancellationToken)
+    public async Task<string?> BuyCryptocurrencyAsync(Cryptocurrency? cryptocurrency,
+        CancellationToken cancellationToken)
     {
         var pair = CoinPairMapper.ToPair(cryptocurrency.Coin);
         _logger.LogDebug("Mapped {Object} to {Object} [coin={Coin}, pair={Pair}]", nameof(Coin), nameof(Pair),
