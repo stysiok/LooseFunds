@@ -5,11 +5,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Weasel.Core;
 
-namespace LooseFunds.Shared.Toolbox.Storage;
+namespace LooseFunds.Shared.Toolbox.Storage.Marten;
 
-public static class StorageExtensions
+public static class MartenExtensions
 {
-    public static IServiceCollection AddStorage(this IServiceCollection services, IConfiguration configuration,
+    public static void AddMartenStorage(this IServiceCollection services, IConfiguration configuration,
         IHostEnvironment environment)
     {
         var connectionString = configuration.GetConnectionString("Marten") ??
@@ -27,6 +27,6 @@ public static class StorageExtensions
             if (environment.IsDevelopment()) options.AutoCreateSchemaObjects = AutoCreate.All;
         });
 
-        return services;
+        services.AddScoped<IStorage, MartenStorage>();
     }
 }

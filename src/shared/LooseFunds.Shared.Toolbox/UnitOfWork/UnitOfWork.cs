@@ -1,5 +1,5 @@
 using LooseFunds.Shared.Toolbox.Core.Repository;
-using Marten;
+using LooseFunds.Shared.Toolbox.Storage;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
@@ -7,15 +7,15 @@ namespace LooseFunds.Shared.Toolbox.UnitOfWork;
 
 internal sealed class UnitOfWork : IUnitOfWork
 {
-    private readonly IDocumentStore _documentStore;
+    private readonly IStorage _storage;
     private readonly IMediator _mediator;
     private readonly ILogger<UnitOfWork> _logger;
     private readonly HashSet<IRepositoryBase> _repositories = new();
     private bool _storedAlready;
 
-    public UnitOfWork(IDocumentStore documentStore, IMediator mediator, ILogger<UnitOfWork> logger)
+    public UnitOfWork(IStorage storage, IMediator mediator, ILogger<UnitOfWork> logger)
     {
-        _documentStore = documentStore;
+        _storage = storage;
         _mediator = mediator;
         _logger = logger;
     }
@@ -54,12 +54,10 @@ internal sealed class UnitOfWork : IUnitOfWork
     {
         if (_storedAlready) return;
 
-        await using var session = _documentStore.LightweightSession();
-
         var documents = _repositories.SelectMany(r => r.ToDocument());
 
-        session.StoreObjects(documents);
-        await session.SaveChangesAsync(cancellationToken);
+        await _storage.StoreAsync(documents, cancellationToken);
+
         _storedAlready = true;
     }
 }

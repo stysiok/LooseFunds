@@ -9,6 +9,7 @@ using LooseFunds.Shared.Toolbox.Correlation;
 using LooseFunds.Shared.Toolbox.Logging;
 using LooseFunds.Shared.Toolbox.MediatR;
 using LooseFunds.Shared.Toolbox.Messaging;
+using LooseFunds.Shared.Toolbox.Storage.Marten;
 using LooseFunds.Shared.Toolbox.UnitOfWork;
 using MediatR;
 
@@ -21,7 +22,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddKrakenAdapter(builder.Configuration, builder.Environment);
 builder.Services.AddCorrelationLogEnricher();
-builder.Services.AddUnitOfWork(builder.Configuration, builder.Environment);
+builder.Services.AddUnitOfWork();
+builder.Services.AddMartenStorage(builder.Configuration, builder.Environment);
 builder.Services.AddMediatR(typeof(ApplicationExtensions).Assembly);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
