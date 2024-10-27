@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LooseFunds.Shared.Toolbox.MediatR;
 
-//TODO change name to not suggest the underlying configuration
 public static class MediatRExtensions
 {
     public static void AddMediatR(this IServiceCollection services, Assembly assembly)
