@@ -26,20 +26,20 @@ internal sealed class CryptocurrencyService : ICryptocurrencyService
     {
         var pairs = Enum.GetValues<Coin>().Select(CoinPairMapper.ToPair).ToList();
         _logger.LogDebug("Mapped all available coins to pairs");
-        
-        var tickers = await _marketDataService.GetTickerInfoAsync(pairs, cancellationToken);
-        _logger.LogDebug("Got tickers matching pairs");
-        
-        var minOrders = await _marketDataService.GetTradableAssetPairAsync(pairs, cancellationToken);
-        _logger.LogDebug("Got all min orders for pairs");
 
-        //TODO use task all to await both calls at the same time
-        
-        return tickers.Select(t =>
+        var tickers = _marketDataService.GetTickerInfoAsync(pairs, cancellationToken);
+
+        var minOrders = _marketDataService.GetTradableAssetPairAsync(pairs, cancellationToken);
+
+        await Task.WhenAll(tickers, minOrders);
+
+        _logger.LogDebug("Got all min orders and tickers for pairs");
+
+        return tickers.Result.Select(t =>
         {
             var coin = CoinPairMapper.ToCoin(Enum.Parse<Pair>(t.Key));
             var price = decimal.Parse(t.Value.LastTradeClosed[0]);
-            var fraction = decimal.Parse(minOrders[t.Key].MinimumOrder);
+            var fraction = decimal.Parse(minOrders.Result[t.Key].MinimumOrder);
 
             _logger.LogDebug("Converting to {Object} [coin={Coin}, price={Price}, fraction={Fraction}]",
                 nameof(Cryptocurrency), coin, price, fraction);
