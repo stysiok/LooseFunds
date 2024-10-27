@@ -33,15 +33,15 @@ public abstract class RepositoryBase<TDomain, TEntity> : IRepositoryBase
 
     protected void Track(DomainObject domainObject)
     {
-        var domainObjectName = typeof(TDomain).Name;
         var wasAdded = _tracked.Add(domainObject);
         if (wasAdded is false)
-            //TODO what should happen here?
-            Logger.LogError("{Object} was not added to tracked objects [id={Id}]", _domainObjectName, domainObject.Id);
-        Logger.LogDebug("Started tracking {Object} [id={Id}]", _domainObjectName, domainObject.Id);
-        
+        {
+            Logger.LogDebug("{Object} is already being tracked [id={Id}]", _domainObjectName, domainObject.Id);
+            return;
+        }
+
         _unitOfWork.AddRepository(this);
-        
+        Logger.LogDebug("Started tracking {Object} [id={Id}]", _domainObjectName, domainObject.Id);
     }
 
     protected Task<TDomain> GetAsync(Guid id, CancellationToken cancellationToken)
