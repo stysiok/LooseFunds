@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
     public static void AddKraken(this IServiceCollection services, IConfiguration configuration,
         IHostEnvironment environment)
     {
-        var krakenConfigurationSection = configuration.GetRequiredSection(KrakenSettingsConsts.SectionName);
+        var krakenConfigurationSection = configuration.GetRequiredSection(KrakenConsts.SectionName);
 
         VerifyKrakenCredentials(krakenConfigurationSection);
         VerifyKrakenOptions(krakenConfigurationSection);
