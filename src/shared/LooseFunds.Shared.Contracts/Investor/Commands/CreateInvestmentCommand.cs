@@ -1,6 +1,6 @@
-using LooseFunds.Shared.Toolbox.Messaging;
+using LooseFunds.Shared.Toolbox.Messaging.Models;
 
-namespace LooseFunds.Shared.Contracts.Investor;
+namespace LooseFunds.Shared.Contracts.Investor.Commands;
 
 public sealed record CreateInvestmentCommand : IMessageContent
 {
