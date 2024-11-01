@@ -1,10 +1,11 @@
 using System.Collections.Concurrent;
 using System.Reflection;
+using LooseFunds.Shared.Toolbox.Messaging.Models;
 using Memphis.Client;
 using Memphis.Client.Producer;
 using Microsoft.Extensions.Logging;
 
-namespace LooseFunds.Shared.Toolbox.Messaging;
+namespace LooseFunds.Shared.Toolbox.Messaging.Memphis;
 
 internal sealed class MemphisProducerProvider : IMemphisProducerProvider
 {

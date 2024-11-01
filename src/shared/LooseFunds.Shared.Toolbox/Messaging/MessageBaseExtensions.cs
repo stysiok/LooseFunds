@@ -1,4 +1,5 @@
 using System.Text;
+using LooseFunds.Shared.Toolbox.Messaging.Models;
 using Newtonsoft.Json;
 
 namespace LooseFunds.Shared.Toolbox.Messaging;

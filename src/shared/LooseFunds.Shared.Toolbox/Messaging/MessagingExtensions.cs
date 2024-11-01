@@ -1,3 +1,4 @@
+using LooseFunds.Shared.Toolbox.Messaging.Memphis;
 using Memphis.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,7 +7,10 @@ namespace LooseFunds.Shared.Toolbox.Messaging;
 
 public static class MessagingExtensions
 {
-    public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
+    //TODO validate settings
+    //TODO make obsolete and find alternative for rpi (rabbitmq in docker)
+
+    public static void AddMessaging(this IServiceCollection services, IConfiguration configuration)
     {
         var memphisOptions = configuration.GetSection(MessagingConsts.MemphisSection).Get<MemphisOptions>();
 
@@ -23,7 +27,5 @@ public static class MessagingExtensions
         services.AddSingleton<IMessagePublisher, MemphisMessagePublisher>();
         services.AddSingleton<IMessageSubscriber, MemphisMessageSubscriber>();
         services.AddSingleton<IMemphisProducerProvider, MemphisProducerProvider>();
-
-        return services;
     }
 }

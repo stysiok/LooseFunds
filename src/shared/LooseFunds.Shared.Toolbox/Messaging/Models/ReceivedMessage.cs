@@ -1,3 +1,5 @@
+using LooseFunds.Shared.Toolbox.Messaging.Models;
+
 namespace LooseFunds.Shared.Toolbox.Messaging;
 
 public sealed record ReceivedMessage<TContent>

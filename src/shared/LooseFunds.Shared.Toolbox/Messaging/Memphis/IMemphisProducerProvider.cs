@@ -1,6 +1,7 @@
+using LooseFunds.Shared.Toolbox.Messaging.Models;
 using Memphis.Client.Producer;
 
-namespace LooseFunds.Shared.Toolbox.Messaging;
+namespace LooseFunds.Shared.Toolbox.Messaging.Memphis;
 
 internal interface IMemphisProducerProvider
 {

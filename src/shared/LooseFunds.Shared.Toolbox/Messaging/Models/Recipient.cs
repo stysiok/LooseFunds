@@ -1,4 +1,4 @@
-namespace LooseFunds.Shared.Toolbox.Messaging;
+namespace LooseFunds.Shared.Toolbox.Messaging.Models;
 
 public enum Recipient
 {

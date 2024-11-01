@@ -1,11 +1,12 @@
 using System.Reflection;
 using System.Text;
+using LooseFunds.Shared.Toolbox.Messaging.Models;
 using Memphis.Client;
 using Memphis.Client.Consumer;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace LooseFunds.Shared.Toolbox.Messaging;
+namespace LooseFunds.Shared.Toolbox.Messaging.Memphis;
 
 internal sealed class MemphisMessageSubscriber : IMessageSubscriber
 {

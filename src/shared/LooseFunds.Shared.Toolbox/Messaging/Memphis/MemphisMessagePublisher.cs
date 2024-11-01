@@ -1,7 +1,8 @@
 using System.Collections.Specialized;
+using LooseFunds.Shared.Toolbox.Messaging.Models;
 using Microsoft.Extensions.Logging;
 
-namespace LooseFunds.Shared.Toolbox.Messaging;
+namespace LooseFunds.Shared.Toolbox.Messaging.Memphis;
 
 internal sealed class MemphisMessagePublisher : IMessagePublisher
 {
