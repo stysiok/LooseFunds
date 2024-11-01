@@ -1,4 +1,4 @@
-using LooseFunds.Shared.Contracts.Investor;
+using LooseFunds.Shared.Contracts.Investor.Commands;
 using LooseFunds.Shared.Toolbox.Messaging;
 using Microsoft.Extensions.Logging;
 using Quartz;
