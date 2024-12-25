@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddCorrelationLogEnricher()
     .AddJobs()
+    .AddJob<StartDailyInvestmentJob>()
     .AddMessaging(builder.Configuration);
     
 

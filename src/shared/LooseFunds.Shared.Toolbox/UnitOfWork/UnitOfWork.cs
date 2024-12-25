@@ -1,4 +1,6 @@
+using LooseFunds.Shared.Toolbox.Core.Domain;
 using LooseFunds.Shared.Toolbox.Core.Repository;
+using LooseFunds.Shared.Toolbox.Messaging.Outbox;
 using LooseFunds.Shared.Toolbox.Storage;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -8,15 +10,20 @@ namespace LooseFunds.Shared.Toolbox.UnitOfWork;
 internal sealed class UnitOfWork : IUnitOfWork
 {
     private readonly IStorage _storage;
+    private readonly IEventsMapper? _eventsMapper;
     private readonly IMediator _mediator;
+    private readonly IOutboxRepository _outboxRepository;
     private readonly ILogger<UnitOfWork> _logger;
     private readonly HashSet<IRepositoryBase> _repositories = new();
     private bool _storedAlready;
 
-    public UnitOfWork(IStorage storage, IMediator mediator, ILogger<UnitOfWork> logger)
+    public UnitOfWork(IEventsMapper? eventsMapper, IStorage storage, IMediator mediator,
+        IOutboxRepository outboxRepository, ILogger<UnitOfWork> logger)
     {
         _storage = storage;
+        _eventsMapper = eventsMapper;
         _mediator = mediator;
+        _outboxRepository = outboxRepository;
         _logger = logger;
     }
 
@@ -44,6 +51,8 @@ internal sealed class UnitOfWork : IUnitOfWork
             while (domainEvent is not null)
             {
                 await _mediator.Publish(domainEvent, cancellationToken);
+                var @event = _eventsMapper?.Map(domainEvent);
+                if (@event is not null) _outboxRepository.Add(@event);
 
                 domainEvent = repository.GetNextDomainEvent();
             }

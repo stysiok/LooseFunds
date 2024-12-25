@@ -2,6 +2,7 @@ using LooseFunds.Shared.Toolbox.Core.Converters;
 using LooseFunds.Shared.Toolbox.Core.Domain;
 using LooseFunds.Shared.Toolbox.Core.Entity;
 using LooseFunds.Shared.Toolbox.UnitOfWork;
+using Marten;
 using Microsoft.Extensions.Logging;
 
 namespace LooseFunds.Shared.Toolbox.Core.Repository;
@@ -10,16 +11,22 @@ public abstract class RepositoryBase<TDomain, TEntity> : IRepositoryBase
     where TDomain : DomainObject
     where TEntity : DocumentEntity
 {
-    private readonly IDomainObjectConverter<TDomain, TEntity> _converter;
     private readonly HashSet<DomainObject> _tracked;
     private readonly IUnitOfWork _unitOfWork;
-    protected readonly ILogger Logger;
     private readonly string _domainObjectName;
 
-    protected RepositoryBase(IDomainObjectConverter<TDomain, TEntity> converter, IUnitOfWork unitOfWork, ILogger logger)
+    protected readonly IDomainObjectConverter<TDomain, TEntity> DomainConverter;
+    protected readonly IEntityObjectConverter<TEntity, TDomain> EntityConverter;
+    protected readonly ILogger Logger;
+    protected readonly IQuerySession QuerySession;
+
+    protected RepositoryBase(IQuerySession querySession, IDomainObjectConverter<TDomain, TEntity> domainConverter,
+        IEntityObjectConverter<TEntity, TDomain> entityConverter, IUnitOfWork unitOfWork, ILogger logger)
     {
         _domainObjectName = typeof(TDomain).Name;
-        _converter = converter;
+        QuerySession = querySession;
+        DomainConverter = domainConverter;
+        EntityConverter = entityConverter;
         _unitOfWork = unitOfWork;
         Logger = logger;
         _tracked = new HashSet<DomainObject>();
@@ -29,7 +36,7 @@ public abstract class RepositoryBase<TDomain, TEntity> : IRepositoryBase
         => _tracked.Select(domainObject => domainObject.TryGetNextDomainEvent()).FirstOrDefault();
 
     public IEnumerable<DocumentEntity> ToDocument()
-        => _tracked.Select(t => _converter.ToDocumentEntity((TDomain)t));
+        => _tracked.Select(tracked => DomainConverter.ToDocumentEntity((TDomain)tracked));
 
     protected void Track(DomainObject domainObject)
     {

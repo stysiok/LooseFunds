@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using LooseFunds.Shared.Toolbox.Core.Domain;
 using LooseFunds.Shared.Toolbox.Messaging.Models;
 using Memphis.Client;
 using Memphis.Client.Consumer;
@@ -25,7 +26,7 @@ internal sealed class MemphisMessageSubscriber : IMessageSubscriber
     }
 
     public async Task SubscribeAsync<TContent>(Recipient recipient, Action<TContent> onMessageReceived,
-        CancellationToken cancellationToken) where TContent : IMessageContent
+        CancellationToken cancellationToken) where TContent : IntegrationEvent
     {
         var stationName = recipient.ToString();
 

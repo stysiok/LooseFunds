@@ -1,3 +1,4 @@
+using LooseFunds.Shared.Toolbox.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,10 +15,25 @@ public static class JobsExtensions
         return services;
     }
 
+    public static IServiceCollection AddJob<TJob>(this IServiceCollection services) where TJob : class, IJob
+    {
+        services.AddTransient<TJob>();
+        services.AddTransient<IJob>(serviceProvider =>
+        {
+            var baseJob = serviceProvider.GetRequiredService<TJob>();
+            var unitOfWork = serviceProvider.GetRequiredService<IUnitOfWork>();
+            var uowJob = new JobUnitOfWorkDecorator(baseJob, unitOfWork);
+            return uowJob;
+        });
+
+        return services;
+    }
+
     public static async Task ScheduleJobAsync<TJob>(this WebApplication webApplication) where TJob : IJob
     {
-        var schedulerFactory = webApplication.Services.GetRequiredService<ISchedulerFactory>();
         var logger = webApplication.Services.GetRequiredService<ILogger<JobScheduler>>();
+        
+        var schedulerFactory = webApplication.Services.GetRequiredService<ISchedulerFactory>();
         var scheduler = await schedulerFactory.GetScheduler();
 
         var jobName = typeof(TJob).Name;

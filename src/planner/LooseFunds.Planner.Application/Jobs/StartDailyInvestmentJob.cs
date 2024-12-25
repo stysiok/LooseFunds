@@ -1,5 +1,5 @@
 using LooseFunds.Shared.Contracts.Investor.Commands;
-using LooseFunds.Shared.Toolbox.Messaging;
+using LooseFunds.Shared.Toolbox.Messaging.Outbox;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
@@ -7,21 +7,23 @@ namespace LooseFunds.Planner.Application.Jobs;
 
 public sealed class StartDailyInvestmentJob : IJob
 {
-    private readonly IMessagePublisher _messagePublisher;
+    private readonly IOutboxService _outboxService;
     private readonly ILogger<StartDailyInvestmentJob> _logger;
 
-    public StartDailyInvestmentJob(IMessagePublisher messagePublisher, ILogger<StartDailyInvestmentJob> logger)
+    public StartDailyInvestmentJob(IOutboxService outboxService, ILogger<StartDailyInvestmentJob> logger)
     {
-        _messagePublisher = messagePublisher;
+        _outboxService = outboxService;
         _logger = logger;
     }
 
-    public async Task Execute(IJobExecutionContext context)
+    public Task Execute(IJobExecutionContext context)
     {
         _logger.LogInformation("Publishing message [message_type={MessageType}]", nameof(CreateInvestmentCommand));
 
-        await _messagePublisher.PublishAsync(CreateInvestmentCommand.BuildMessage(), context.CancellationToken);
+        _outboxService.Add(new CreateInvestmentCommand());
 
         _logger.LogInformation("Published message [message_type={MessageType}]", nameof(CreateInvestmentCommand));
+
+        return Task.CompletedTask;
     }
 }

@@ -1,4 +1,4 @@
 namespace LooseFunds.Shared.Toolbox.Messaging.Models;
 
-public sealed record PublishMessage<TContent>(Recipient Recipient, TContent Message) : MessageBase(Recipient)
-    where TContent : IMessageContent;
+public sealed record PublishMessage(Guid Id, Recipient Recipient, string Type, string Message)
+    : MessageBase(Id, Recipient, Type, Message);

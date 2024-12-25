@@ -16,17 +16,19 @@ internal sealed class MemphisMessagePublisher : IMessagePublisher
         _logger = logger;
     }
 
-    public async Task PublishAsync<TMessage>(PublishMessage<TMessage> messageBase,
-        CancellationToken cancellationToken) where TMessage : IMessageContent
+    public async Task PublishAsync(PublishMessage messageBase,
+        CancellationToken cancellationToken)
     {
-        _logger.LogDebug("Sending message to station [message_type={MessageType}, station={Station}]",
-            typeof(TMessage).Name, messageBase.Recipient);
+        _logger.LogDebug(
+            "Sending message to station [message_id={MessageId}, message_type={MessageType}, station={Station}]",
+            messageBase.Id, messageBase.Type, messageBase.Recipient);
 
         var producer = await _memphisProducerProvider.GetProducerAsync(messageBase.Recipient, cancellationToken);
         var bytes = messageBase.ToBytes();
         await producer.ProduceAsync(bytes, new NameValueCollection());
 
-        _logger.LogDebug("Sent message to station [message_type={MessageType}, station={Station}]",
-            typeof(TMessage).Name, messageBase.Recipient);
+        _logger.LogDebug(
+            "Sent message to station [message_id={MessageId}, message_type={MessageType}, station={Station}]",
+            messageBase.Id, messageBase.Type, messageBase.Recipient);
     }
 }

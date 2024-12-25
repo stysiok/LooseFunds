@@ -1,9 +1,9 @@
+using LooseFunds.Shared.Toolbox.Core.Domain;
 using LooseFunds.Shared.Toolbox.Messaging.Models;
 
 namespace LooseFunds.Shared.Contracts.Investor.Commands;
 
-public sealed record CreateInvestmentCommand : IMessageContent
+public sealed record CreateInvestmentCommand : IntegrationEvent
 {
-    public static PublishMessage<CreateInvestmentCommand> BuildMessage()
-        => new(Recipient.Investor, new CreateInvestmentCommand());
+    public override Recipient[] Recipients { get; } = { Recipient.Investor };
 }
