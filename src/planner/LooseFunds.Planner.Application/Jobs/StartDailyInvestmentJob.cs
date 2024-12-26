@@ -7,12 +7,12 @@ namespace LooseFunds.Planner.Application.Jobs;
 
 public sealed class StartDailyInvestmentJob : IJob
 {
-    private readonly IOutboxService _outboxService;
+    private readonly IOutboxStore _outboxStore;
     private readonly ILogger<StartDailyInvestmentJob> _logger;
 
-    public StartDailyInvestmentJob(IOutboxService outboxService, ILogger<StartDailyInvestmentJob> logger)
+    public StartDailyInvestmentJob(IOutboxStore outboxStore, ILogger<StartDailyInvestmentJob> logger)
     {
-        _outboxService = outboxService;
+        _outboxStore = outboxStore;
         _logger = logger;
     }
 
@@ -20,7 +20,7 @@ public sealed class StartDailyInvestmentJob : IJob
     {
         _logger.LogInformation("Publishing message [message_type={MessageType}]", nameof(CreateInvestmentCommand));
 
-        _outboxService.Add(new CreateInvestmentCommand());
+        _outboxStore.Add(new CreateInvestmentCommand());
 
         _logger.LogInformation("Published message [message_type={MessageType}]", nameof(CreateInvestmentCommand));
 
