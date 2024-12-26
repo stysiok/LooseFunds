@@ -8,8 +8,3 @@ internal interface IOutboxRepository
     void Add(Models.Outbox outbox);
     Task<IReadOnlyCollection<Models.Outbox>> GetAllPendingAsync(CancellationToken cancellationToken);
 }
-
-public interface IOutboxService
-{
-    void Add(IntegrationEvent integrationEvent);
-}

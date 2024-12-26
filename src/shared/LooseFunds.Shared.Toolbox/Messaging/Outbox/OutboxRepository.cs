@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace LooseFunds.Shared.Toolbox.Messaging.Outbox;
 
-internal sealed class OutboxRepository : RepositoryBase<Models.Outbox, OutboxEntity>, IOutboxRepository, IOutboxService
+internal sealed class OutboxRepository : RepositoryBase<Models.Outbox, OutboxEntity>, IOutboxRepository, IOutboxStore
 {
     public OutboxRepository(IQuerySession querySession,
         IDomainObjectConverter<Models.Outbox, OutboxEntity> domainConverter,
@@ -22,10 +22,6 @@ internal sealed class OutboxRepository : RepositoryBase<Models.Outbox, OutboxEnt
     {
         var outboxes = Models.Outbox.Create(integrationEvent);
         foreach (var outbox in outboxes) Track(outbox);
-    }
-
-    void IOutboxService.Add(IntegrationEvent integrationEvent)
-    {
     }
 
     public void Add(Models.Outbox outbox) => Track(outbox);

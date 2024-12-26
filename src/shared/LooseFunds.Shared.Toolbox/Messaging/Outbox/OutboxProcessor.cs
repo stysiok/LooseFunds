@@ -1,8 +1,9 @@
 using LooseFunds.Shared.Toolbox.Messaging.Outbox.Extensions;
+using Quartz;
 
 namespace LooseFunds.Shared.Toolbox.Messaging.Outbox;
 
-internal sealed class OutboxProcessor : IOutboxProcessor
+internal sealed class OutboxProcessor : IJob
 {
     private readonly IOutboxRepository _outboxRepository;
     private readonly IMessagePublisher _messagePublisher;
@@ -13,7 +14,9 @@ internal sealed class OutboxProcessor : IOutboxProcessor
         _messagePublisher = messagePublisher;
     }
 
-    public async Task SendPendingAsync(CancellationToken cancellationToken)
+    public async Task Execute(IJobExecutionContext context) => await SendPendingAsync(context.CancellationToken);
+
+    private async Task SendPendingAsync(CancellationToken cancellationToken)
     {
         var pending = await _outboxRepository.GetAllPendingAsync(cancellationToken);
 
@@ -25,4 +28,5 @@ internal sealed class OutboxProcessor : IOutboxProcessor
             _outboxRepository.Add(outbox);
         }
     }
+
 }

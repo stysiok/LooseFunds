@@ -1,5 +1,11 @@
+using LooseFunds.Shared.Toolbox.Core.Converters;
+using LooseFunds.Shared.Toolbox.Jobs;
 using LooseFunds.Shared.Toolbox.Messaging.Memphis;
+using LooseFunds.Shared.Toolbox.Messaging.Outbox;
+using LooseFunds.Shared.Toolbox.Messaging.Outbox.Converters;
+using LooseFunds.Shared.Toolbox.Messaging.Outbox.Models;
 using Memphis.Client;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,4 +34,19 @@ public static class MessagingExtensions
         services.AddSingleton<IMessageSubscriber, MemphisMessageSubscriber>();
         services.AddSingleton<IMemphisProducerProvider, MemphisProducerProvider>();
     }
+
+    //TODO validate if jobs are added, as outbox requires them 
+    public static void AddOutbox(this IServiceCollection services)
+    {
+        services.AddSingleton<IDomainObjectConverter<Outbox.Models.Outbox, OutboxEntity>, OutboxConverter>();
+        services.AddSingleton<IEntityObjectConverter<OutboxEntity, Outbox.Models.Outbox>, OutboxConverter>();
+
+        services.AddJob<OutboxProcessor>();
+
+        services.AddScoped<IOutboxRepository, OutboxRepository>();
+        services.AddScoped<IOutboxStore, OutboxRepository>();
+    }
+
+    public static Task ScheduleOutboxJob(this WebApplication webApplication)
+        => webApplication.ScheduleJobAsync<OutboxProcessor>();
 }

@@ -29,6 +29,7 @@ public static class JobsExtensions
         return services;
     }
 
+    //TODO validate if jobs are added to the project
     public static async Task ScheduleJobAsync<TJob>(this WebApplication webApplication) where TJob : IJob
     {
         var logger = webApplication.Services.GetRequiredService<ILogger<JobScheduler>>();
