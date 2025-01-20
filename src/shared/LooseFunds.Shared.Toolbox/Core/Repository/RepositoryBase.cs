@@ -7,11 +7,10 @@ using Microsoft.Extensions.Logging;
 
 namespace LooseFunds.Shared.Toolbox.Core.Repository;
 
-public abstract class RepositoryBase<TDomain, TEntity> : IRepositoryBase
+public abstract class RepositoryBase<TDomain, TEntity>
     where TDomain : DomainObject
     where TEntity : DocumentEntity
 {
-    private readonly HashSet<DomainObject> _tracked;
     private readonly IUnitOfWork _unitOfWork;
     private readonly string _domainObjectName;
 
@@ -29,32 +28,15 @@ public abstract class RepositoryBase<TDomain, TEntity> : IRepositoryBase
         EntityConverter = entityConverter;
         _unitOfWork = unitOfWork;
         Logger = logger;
-        _tracked = new HashSet<DomainObject>();
     }
 
-    public IDomainEvent? GetNextDomainEvent()
-        => _tracked.Select(domainObject => domainObject.TryGetNextDomainEvent()).FirstOrDefault();
-
-    public IEnumerable<DocumentEntity> ToDocument()
-        => _tracked.Select(tracked => DomainConverter.ToDocumentEntity((TDomain)tracked));
-
-    protected void Track(DomainObject domainObject)
-    {
-        var wasAdded = _tracked.Add(domainObject);
-        if (wasAdded is false)
-        {
-            Logger.LogDebug("{Object} is already being tracked [id={Id}]", _domainObjectName, domainObject.Id);
-            return;
-        }
-
-        _unitOfWork.AddRepository(this);
-        Logger.LogDebug("Started tracking {Object} [id={Id}]", _domainObjectName, domainObject.Id);
-    }
+    protected void Track(DomainObject domainObject) =>
+        _unitOfWork.Track(new Trackable<TDomain, TEntity>((TDomain)domainObject, DomainConverter));
 
     protected Task<TDomain> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         Logger.LogDebug("{Method} trying to get {Object} [id={Id}]", nameof(GetAsync), _domainObjectName, id);
-        var domainObject = _tracked.FirstOrDefault(o => o.Id.Equals(id));
+        var domainObject = _unitOfWork.Get(id);
 
         if (domainObject is not null)
         {

@@ -1,6 +1,7 @@
 using LooseFunds.Investor.Adapters.Kraken;
 using LooseFunds.Investor.Application;
 using LooseFunds.Investor.Application.Handlers.CreateInvestment;
+using LooseFunds.Investor.Core;
 using LooseFunds.Investor.Infrastructure;
 using LooseFunds.Shared.Platforms.Kraken.Models.Common;
 using LooseFunds.Shared.Platforms.Kraken.Services;
@@ -28,6 +29,8 @@ builder.Services.AddMediatR(typeof(ApplicationExtensions).Assembly);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 builder.Services.AddMessaging(builder.Configuration);
+builder.Services.AddOutbox();
+builder.Services.AddCore();
 
 builder.Host.UseLogging(builder.Configuration);
 

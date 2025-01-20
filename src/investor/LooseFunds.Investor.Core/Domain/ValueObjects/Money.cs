@@ -2,6 +2,8 @@ using FluentValidation;
 
 namespace LooseFunds.Investor.Core.Domain.ValueObjects;
 
+// TODO Create abstraction for value objects
+
 public sealed class Money
 {
     private Money()

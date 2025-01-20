@@ -36,7 +36,7 @@ public static class MessagingExtensions
     }
 
     //TODO validate if jobs are added, as outbox requires them 
-    public static void AddOutbox(this IServiceCollection services)
+    public static IServiceCollection AddOutbox(this IServiceCollection services)
     {
         services.AddSingleton<IDomainObjectConverter<Outbox.Models.Outbox, OutboxEntity>, OutboxConverter>();
         services.AddSingleton<IEntityObjectConverter<OutboxEntity, Outbox.Models.Outbox>, OutboxConverter>();
@@ -45,8 +45,10 @@ public static class MessagingExtensions
 
         services.AddScoped<IOutboxRepository, OutboxRepository>();
         services.AddScoped<IOutboxStore, OutboxRepository>();
+
+        return services;
     }
 
     public static Task ScheduleOutboxJob(this WebApplication webApplication)
-        => webApplication.ScheduleJobAsync<OutboxProcessor>();
+        => webApplication.ScheduleJobAsync<OutboxProcessor>(b => b.WithIntervalInSeconds(30).RepeatForever());
 }

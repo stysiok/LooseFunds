@@ -4,6 +4,6 @@ namespace LooseFunds.Shared.Toolbox.UnitOfWork;
 
 public static class UnitOfWorkExtensions
 {
-    public static void AddUnitOfWork(this IServiceCollection services)
+    public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         => services.AddScoped<IUnitOfWork, UnitOfWork>();
 }

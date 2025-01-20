@@ -63,5 +63,6 @@ public sealed class Investment : DomainObject
         CheckFor(new TransactionIdIsValid(transactionId));
         
         TransactionId = transactionId;
+        AddDomainEvent(new InvestmentFinished(Picked!, Budget!));
     }
 }

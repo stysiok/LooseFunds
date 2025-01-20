@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Globalization;
 using LooseFunds.Investor.Adapters.Kraken.Mappers;
 using LooseFunds.Investor.Core.Domain.Consts;
 using LooseFunds.Investor.Core.Domain.ValueObjects;
@@ -38,8 +39,8 @@ internal sealed class CryptocurrencyService : ICryptocurrencyService
         return tickers.Result.Select(t =>
         {
             var coin = CoinPairMapper.ToCoin(Enum.Parse<Pair>(t.Key));
-            var price = decimal.Parse(t.Value.LastTradeClosed[0]);
-            var fraction = decimal.Parse(minOrders.Result[t.Key].MinimumOrder);
+            var price = decimal.Parse(t.Value.LastTradeClosed[0], CultureInfo.InvariantCulture);
+            var fraction = decimal.Parse(minOrders.Result[t.Key].MinimumOrder, CultureInfo.InvariantCulture);
 
             _logger.LogDebug("Converting to {Object} [coin={Coin}, price={Price}, fraction={Fraction}]",
                 nameof(Cryptocurrency), coin, price, fraction);

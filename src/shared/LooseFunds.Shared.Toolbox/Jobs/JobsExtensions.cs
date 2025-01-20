@@ -30,7 +30,8 @@ public static class JobsExtensions
     }
 
     //TODO validate if jobs are added to the project
-    public static async Task ScheduleJobAsync<TJob>(this WebApplication webApplication) where TJob : IJob
+    public static async Task ScheduleJobAsync<TJob>(this WebApplication webApplication,
+        Action<SimpleScheduleBuilder> scheduleBuilder) where TJob : IJob
     {
         var logger = webApplication.Services.GetRequiredService<ILogger<JobScheduler>>();
         
@@ -51,7 +52,7 @@ public static class JobsExtensions
         var trigger = TriggerBuilder.Create()
             .WithIdentity(triggerName, group)
             .StartNow()
-            .WithSimpleSchedule(x => x.RepeatForever().WithIntervalInHours(24))
+            .WithSimpleSchedule(scheduleBuilder)
             .Build();
 
         await scheduler.ScheduleJob(job, trigger);

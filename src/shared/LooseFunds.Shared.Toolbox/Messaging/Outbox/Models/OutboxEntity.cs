@@ -4,7 +4,7 @@ using LooseFunds.Shared.Toolbox.Messaging.Outbox.Consts;
 
 namespace LooseFunds.Shared.Toolbox.Messaging.Outbox.Models;
 
-internal sealed class OutboxEntity : DocumentEntity
+public sealed class OutboxEntity : DocumentEntity
 {
     public Status Status { get; init; }
     public Recipient Recipient { get; init; }

@@ -1,3 +1,4 @@
+using LooseFunds.Shared.Contracts.Investor.Events;
 using LooseFunds.Shared.Toolbox.Messaging;
 using LooseFunds.Shared.Toolbox.Messaging.Models;
 using Microsoft.Extensions.Hosting;
@@ -19,10 +20,10 @@ internal sealed class InvestmentCreatedEventSubscriber : BackgroundService
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _messageSubscriber.SubscribeAsync<InvestmentCreatedEvent>(Recipient.Investor,
+        _messageSubscriber.SubscribeAsync<InvestmentFinishedEvent>(Recipient.Investor,
             command =>
             {
-                _logger.LogInformation("Message received [message_type={MessageType}]", command.GetType().Name);
+                
             }, stoppingToken);
 
         return Task.CompletedTask;

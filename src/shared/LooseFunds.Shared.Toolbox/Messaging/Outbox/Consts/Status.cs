@@ -1,6 +1,6 @@
 namespace LooseFunds.Shared.Toolbox.Messaging.Outbox.Consts;
 
-internal enum Status
+public enum Status
 {
     Pending,
     Sent,

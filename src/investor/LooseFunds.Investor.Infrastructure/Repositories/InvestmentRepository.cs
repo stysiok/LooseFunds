@@ -12,7 +12,7 @@ public sealed class InvestmentRepository : RepositoryBase<Investment, Investment
 {
     public InvestmentRepository(IDomainObjectConverter<Investment, InvestmentEntity> converter, IUnitOfWork unitOfWork,
         ILogger<InvestmentRepository> logger)
-        : base(converter, unitOfWork, logger)
+        : base(null, converter, null, unitOfWork, logger)
     {
     }
 

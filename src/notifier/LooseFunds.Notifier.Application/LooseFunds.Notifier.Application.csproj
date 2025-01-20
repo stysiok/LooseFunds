@@ -11,6 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\shared\LooseFunds.Shared.Contracts\LooseFunds.Shared.Contracts.csproj"/>
         <ProjectReference Include="..\..\shared\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj"/>
     </ItemGroup>
 

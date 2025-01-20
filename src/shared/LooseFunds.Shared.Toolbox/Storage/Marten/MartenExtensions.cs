@@ -9,7 +9,7 @@ namespace LooseFunds.Shared.Toolbox.Storage.Marten;
 
 public static class MartenExtensions
 {
-    public static void AddMartenStorage(this IServiceCollection services, IConfiguration configuration,
+    public static IServiceCollection AddMartenStorage(this IServiceCollection services, IConfiguration configuration,
         IHostEnvironment environment)
     {
         var connectionString = configuration.GetConnectionString("Marten") ??
@@ -28,5 +28,7 @@ public static class MartenExtensions
         });
 
         services.AddScoped<IStorage, MartenStorage>();
+
+        return services;
     }
 }

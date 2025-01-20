@@ -33,6 +33,8 @@ internal sealed class OutboxRepository : RepositoryBase<Models.Outbox, OutboxEnt
             .Where(e => e.Status == Status.Pending)
             .ToListAsync(cancellationToken);
 
+        Logger.LogDebug("Found pending messages [count={Count}]", entities.Count);
+
         return entities.Select(EntityConverter.ToDomainObject).ToList().AsReadOnly();
     }
 }
