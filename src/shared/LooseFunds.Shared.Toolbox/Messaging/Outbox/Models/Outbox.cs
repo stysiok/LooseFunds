@@ -1,13 +1,14 @@
-using LooseFunds.Shared.Toolbox.Core.Domain;
-using LooseFunds.Shared.Toolbox.Messaging.Models;
-using LooseFunds.Shared.Toolbox.Messaging.Outbox.Consts;
-
 namespace LooseFunds.Shared.Toolbox.Messaging.Outbox.Models;
+
+using System.Text.Json;
+using Consts;
+using Core.Domain;
+using Messaging.Models;
 
 internal sealed class Outbox : DomainObject
 {
     public Status Status { get; private set; }
-    public IntegrationEvent Message { get; }
+    public string Message { get; }
     public Type Type { get; }
     public DateTime CreatedAt { get; }
     public DateTime UpdatedAt { get; } //TODO is it needed
@@ -19,7 +20,7 @@ internal sealed class Outbox : DomainObject
         Status = status;
         Type = message.GetType();
         Recipient = recipient;
-        Message = message;
+        this.Message = JsonSerializer.Serialize(message, message.GetType());
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }

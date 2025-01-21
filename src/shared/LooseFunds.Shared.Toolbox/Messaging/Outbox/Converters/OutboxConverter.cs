@@ -1,7 +1,6 @@
 using System.Text.Json;
 using LooseFunds.Shared.Toolbox.Core.Converters;
 using LooseFunds.Shared.Toolbox.Core.Domain;
-using LooseFunds.Shared.Toolbox.Core.Entity;
 using LooseFunds.Shared.Toolbox.Messaging.Outbox.Models;
 
 namespace LooseFunds.Shared.Toolbox.Messaging.Outbox.Converters;
@@ -29,6 +28,4 @@ internal sealed class OutboxConverter : IDomainObjectConverter<Models.Outbox, Ou
         return Models.Outbox.Restore(entity.Id, entity.Status, message, entity.Recipient, entity.CreatedAt,
             entity.UpdatedAt);
     }
-
-    public DocumentEntity ToDocumentEntity(DomainObject domain) => ToDocumentEntity((Models.Outbox)domain);
 }
