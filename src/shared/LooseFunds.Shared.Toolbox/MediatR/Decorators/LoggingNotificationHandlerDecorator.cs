@@ -17,7 +17,7 @@ internal sealed class LoggingNotificationHandlerDecorator<T> : INotificationHand
 
     public async Task Handle(T notification, CancellationToken cancellationToken)
     {
-        var name = typeof(T).Name;
+        string name = typeof(T).Name;
         _logger.LogInformation("Started processing notification... [name={name}]", name);
         try
         {

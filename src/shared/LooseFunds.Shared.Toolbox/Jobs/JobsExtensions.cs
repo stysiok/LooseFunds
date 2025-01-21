@@ -34,13 +34,13 @@ public static class JobsExtensions
         Action<SimpleScheduleBuilder> scheduleBuilder) where TJob : IJob
     {
         var logger = webApplication.Services.GetRequiredService<ILogger<JobScheduler>>();
-        
+
         var schedulerFactory = webApplication.Services.GetRequiredService<ISchedulerFactory>();
         var scheduler = await schedulerFactory.GetScheduler();
 
-        var jobName = typeof(TJob).Name;
-        var triggerName = $"{jobName}-trigger";
-        var group = $"{jobName}-group";
+        string jobName = typeof(TJob).Name;
+        string triggerName = $"{jobName}-trigger";
+        string group = $"{jobName}-group";
 
         logger.LogTrace("Created job [job_name={JobName}, trigger_name={TriggerName}, group={Group}]", jobName,
             triggerName, group);

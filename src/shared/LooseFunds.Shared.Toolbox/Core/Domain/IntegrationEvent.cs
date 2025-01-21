@@ -1,7 +1,7 @@
-namespace LooseFunds.Shared.Toolbox.Core.Domain;
-
 using System.Text.Json.Serialization;
-using Messaging.Models;
+using LooseFunds.Shared.Toolbox.Messaging.Models;
+
+namespace LooseFunds.Shared.Toolbox.Core.Domain;
 
 public abstract record IntegrationEvent
 {

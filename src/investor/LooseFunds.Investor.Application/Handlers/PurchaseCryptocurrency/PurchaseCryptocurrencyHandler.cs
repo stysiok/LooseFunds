@@ -24,7 +24,7 @@ internal sealed class PurchaseCryptocurrencyHandler : INotificationHandler<Crypt
     public async Task Handle(CryptocurrencyPicked notification, CancellationToken cancellationToken)
     {
         var investment = await _investmentRepository.GetAsync(notification.Id, cancellationToken);
-        var transactionId =
+        string? transactionId =
             await _cryptocurrencyService.BuyCryptocurrencyAsync(investment.Picked, cancellationToken);
         investment.SetTransactionId(transactionId);
         _logger.LogInformation("Set {Property} on {Object} [id={Id}, transaction_id={TransactionId}]",

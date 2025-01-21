@@ -10,9 +10,9 @@ internal sealed class CorrelationMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var hasCorrelationIdHeader = context.Request.Headers.ContainsKey(CorrelationConsts.CorrelationHeader);
+        bool hasCorrelationIdHeader = context.Request.Headers.ContainsKey(CorrelationConsts.CorrelationHeader);
         if (!hasCorrelationIdHeader)
-            context.Request.Headers.Add(CorrelationConsts.CorrelationHeader, GenerateCorrelationId());
+            context.Request.Headers[CorrelationConsts.CorrelationHeader] = GenerateCorrelationId();
 
         await _next(context);
     }

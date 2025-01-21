@@ -42,7 +42,7 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
 
         response.EnsureSuccessStatusCode();
 
-        var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
+        string responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
         var krakenResponse = JsonConvert.DeserializeObject<KrakenResponse<TResponse>>(responseContent);
         _logger.LogDebug("{Request} content deserialized to {Response}", request.Pathname, typeof(TResponse).Name);
 
@@ -61,8 +61,8 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
     private async Task<HttpResponseMessage> ProcessRequest(PublicKrakenRequest request,
         CancellationToken cancellationToken)
     {
-        var inlinedParams = request.ToInlineParams();
-        var requestUri = $"{request.Pathname}?{inlinedParams}";
+        string inlinedParams = request.ToInlineParams();
+        string requestUri = $"{request.Pathname}?{inlinedParams}";
 
         var response = await _client.GetAsync(requestUri, cancellationToken);
         _logger.LogDebug("{Request} sent and response received (status_code={StatusCode})", request.Pathname,
@@ -74,12 +74,12 @@ internal sealed class KrakenHttpClient : IKrakenHttpClient
     private async Task<HttpResponseMessage> ProcessRequest(PrivateKrakenRequest request,
         CancellationToken cancellationToken)
     {
-        var signature = _signer.CreateSignature(request);
+        string signature = _signer.CreateSignature(request);
         _logger.LogDebug("{Request} is private, signature created (signature={Signature})", request.Pathname,
             signature);
         _client.DefaultRequestHeaders.Add(ApiSign, signature);
 
-        var inlinedParams = request.ToInlineParams();
+        string inlinedParams = request.ToInlineParams();
         var content = new StringContent(inlinedParams, Encoding.UTF8, "application/x-www-form-urlencoded");
 
         var response = await _client.PostAsync(request.Pathname, content, cancellationToken);

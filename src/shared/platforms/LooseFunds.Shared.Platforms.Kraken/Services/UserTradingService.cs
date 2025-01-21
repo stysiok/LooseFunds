@@ -14,5 +14,6 @@ internal sealed class UserTradingService : IUserTradingService
         => _client = client;
 
     public Task<Order> AddOrderAsync(Pair pair, decimal volume, CancellationToken cancellationToken)
-        => _client.SendAsync<AddOrder, Order>(new(OrderType.market, Type.buy, volume, pair), cancellationToken);
+        => _client.SendAsync<AddOrder, Order>(new AddOrder(OrderType.market, Type.buy, volume, pair),
+            cancellationToken);
 }

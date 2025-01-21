@@ -20,18 +20,16 @@ internal sealed class PrivateRequestSigner : IPrivateRequestSigner
 
     public string CreateSignature<T>(T request) where T : PrivateKrakenRequest
     {
-        var requestName = typeof(T).Name;
-
-        using var sha256 = SHA256.Create();
-        var inlineParams = request.ToInlineParams();
+        string requestName = typeof(T).Name;
+        string inlineParams = request.ToInlineParams();
         _logger.LogDebug("{Request} params inlined (inlined_params={InlinedParams})", requestName, inlineParams);
 
-        var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes($"{request.Nonce.ToString()}{inlineParams}"));
+        byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes($"{request.Nonce.ToString()}{inlineParams}"));
         _logger.LogDebug("{Request} nonce+params hash computed", requestName);
 
         using var hmac = new HMACSHA512(Convert.FromBase64String(_secret));
-        var path = $"/0/{request.Pathname}";
-        var hmacDigest = hmac.ComputeHash(Encoding.UTF8.GetBytes(path).Concat(hash).ToArray());
+        string path = $"/0/{request.Pathname}";
+        byte[] hmacDigest = hmac.ComputeHash(Encoding.UTF8.GetBytes(path).Concat(hash).ToArray());
         _logger.LogDebug("{Request} hmac form path and hash computed", requestName);
 
         return Convert.ToBase64String(hmacDigest);

@@ -5,8 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace LooseFunds.Investor.Application.Handlers.CreateInvestment;
 
-public sealed record CreateInvestment : INotification;
-
 internal sealed record CreateInvestmentHandler : INotificationHandler<CreateInvestment>
 {
     private readonly IInvestmentRepository _investmentRepository;

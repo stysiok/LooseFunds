@@ -12,8 +12,8 @@ public static class MartenExtensions
     public static IServiceCollection AddMartenStorage(this IServiceCollection services, IConfiguration configuration,
         IHostEnvironment environment)
     {
-        var connectionString = configuration.GetConnectionString("Marten") ??
-                               throw new InvalidOperationException("Missing marten connection string");
+        string connectionString = configuration.GetConnectionString("Marten") ??
+                                  throw new InvalidOperationException("Missing marten connection string");
 
         services.AddMarten(options =>
         {

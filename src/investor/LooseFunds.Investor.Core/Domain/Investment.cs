@@ -35,7 +35,7 @@ public sealed class Investment : DomainObject
         CheckFor(new BudgetIsSet(Budget));
         CheckFor(new AffordableIsNotSet(Affordable));
         CheckFor(new AvailableIsNotSet(Available));
-            
+
         Available = ImmutableList.CreateRange(cryptocurrencies);
         Affordable = cryptocurrencies.Where(c => c.MinimalFractionPrice <= Budget).ToImmutableList();
 
@@ -50,7 +50,7 @@ public sealed class Investment : DomainObject
 
         if (Affordable!.Count == 0) AddDomainEvent(new NoAffordableCryptocurrency(Id));
 
-        var picked = Random.Shared.Next(0, Affordable.Count - 1);
+        int picked = Random.Shared.Next(0, Affordable.Count - 1);
         Picked = Affordable[picked];
         AddDomainEvent(new CryptocurrencyPicked(Id));
     }
@@ -61,7 +61,7 @@ public sealed class Investment : DomainObject
         CheckFor(new AffordableIsSet(Affordable));
         CheckFor(new PickedIsSet(Picked));
         CheckFor(new TransactionIdIsValid(transactionId));
-        
+
         TransactionId = transactionId;
         AddDomainEvent(new InvestmentFinished(Picked!, Budget!));
     }

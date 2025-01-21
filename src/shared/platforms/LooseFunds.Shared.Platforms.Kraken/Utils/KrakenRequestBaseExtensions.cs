@@ -18,12 +18,12 @@ internal static class KrakenRequestBaseExtensions
             .Select(p =>
             {
                 var jsonPropertyAttribute = p.GetCustomAttribute<JsonPropertyAttribute>();
-                var name = jsonPropertyAttribute is null
+                string? name = jsonPropertyAttribute is null
                     ? p.Name.ToLowerInvariant()
                     : jsonPropertyAttribute.PropertyName;
 
-                var isCollection = p.PropertyType != typeof(string) &&
-                                   typeof(IEnumerable).IsAssignableFrom(p.PropertyType);
+                bool isCollection = p.PropertyType != typeof(string) &&
+                                    typeof(IEnumerable).IsAssignableFrom(p.PropertyType);
                 string value;
                 if (isCollection)
                 {

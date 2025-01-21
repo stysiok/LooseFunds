@@ -1,5 +1,5 @@
-namespace LooseFunds.Shared.Toolbox.Core.Domain;
+using MediatR;
 
-using global::MediatR;
+namespace LooseFunds.Shared.Toolbox.Core.Domain;
 
 public interface IDomainEvent : INotification;

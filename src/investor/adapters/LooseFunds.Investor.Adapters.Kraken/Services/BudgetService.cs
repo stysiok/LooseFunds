@@ -20,8 +20,8 @@ internal sealed class BudgetService : IBudgetService
     {
         var accountBalance = await _userDataService.GetAccountBalanceAsync(cancellationToken);
         _logger.LogDebug("{Method} got {Object}", nameof(GetBudgetAsync), nameof(accountBalance));
-        
-        var euros = accountBalance[EuroBalanceKey];
+
+        decimal euros = accountBalance[EuroBalanceKey];
         _logger.LogDebug("Found current € budget in {Object} [budget={Budget}€]", nameof(accountBalance), euros);
         return new Money(euros);
     }

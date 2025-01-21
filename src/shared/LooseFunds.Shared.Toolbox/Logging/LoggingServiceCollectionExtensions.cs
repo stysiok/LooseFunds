@@ -13,7 +13,7 @@ public static class LoggingServiceCollectionExtensions
         => hostBuilder.UseSerilog((context, serviceProvider, loggerConfiguration) =>
         {
             var loggingOptions = configuration.GetSection(LoggingConst.LoggingSection).Get<LoggingOptions>();
-            var applicationName =
+            string applicationName =
                 Assembly.GetEntryAssembly()?.FullName?.Split(',')[0].ToLowerInvariant() ?? string.Empty;
 
             if (context.HostingEnvironment.IsDevelopment())

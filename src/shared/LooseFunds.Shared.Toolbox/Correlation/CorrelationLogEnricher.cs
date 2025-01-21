@@ -19,9 +19,9 @@ internal sealed class CorrelationLogEnricher : ILogEventEnricher
 
         if (httpContext is null ||
             !httpContext.Request.Headers.TryGetValue(CorrelationConsts.CorrelationHeader, out var values) ||
-            !values.Any()) return;
+            values.Count == 0) return;
 
-        var correlationId = values.First();
+        string? correlationId = values.First();
         logEvent.AddPropertyIfAbsent(propertyFactory.CreateProperty(CorrelationConsts.CorrelationLogName,
             correlationId));
     }

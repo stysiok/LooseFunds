@@ -39,8 +39,8 @@ internal sealed class CryptocurrencyService : ICryptocurrencyService
         return tickers.Result.Select(t =>
         {
             var coin = CoinPairMapper.ToCoin(Enum.Parse<Pair>(t.Key));
-            var price = decimal.Parse(t.Value.LastTradeClosed[0], CultureInfo.InvariantCulture);
-            var fraction = decimal.Parse(minOrders.Result[t.Key].MinimumOrder, CultureInfo.InvariantCulture);
+            decimal price = decimal.Parse(t.Value.LastTradeClosed[0], CultureInfo.InvariantCulture);
+            decimal fraction = decimal.Parse(minOrders.Result[t.Key].MinimumOrder, CultureInfo.InvariantCulture);
 
             _logger.LogDebug("Converting to {Object} [coin={Coin}, price={Price}, fraction={Fraction}]",
                 nameof(Cryptocurrency), coin, price, fraction);
@@ -54,9 +54,9 @@ internal sealed class CryptocurrencyService : ICryptocurrencyService
         var pair = CoinPairMapper.ToPair(cryptocurrency.Coin);
         _logger.LogDebug("Mapped {Object} to {Object} [coin={Coin}, pair={Pair}]", nameof(Coin), nameof(Pair),
             cryptocurrency.Coin, pair);
-        
+
         var order = await _userTradingService.AddOrderAsync(pair, cryptocurrency.MinimalFraction, cancellationToken);
-        var transactionId = order.TransactionsIds.Single();
+        string transactionId = order.TransactionsIds.Single();
         _logger.LogDebug("Ordered {Object} [pair={Pair}, transaction_id={TransactionId}]", nameof(Pair), pair,
             transactionId);
 

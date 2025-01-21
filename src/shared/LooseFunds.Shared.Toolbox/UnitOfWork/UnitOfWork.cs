@@ -22,7 +22,7 @@ internal sealed class UnitOfWork : IUnitOfWork
         _storage = storage;
         _mediator = mediator;
         _logger = logger;
-        _eventsMapper = eventsMapper; 
+        _eventsMapper = eventsMapper;
     }
 
     public DomainObject? Get(Guid id)
@@ -39,8 +39,8 @@ internal sealed class UnitOfWork : IUnitOfWork
 
     public void Track(ITrackable trackable)
     {
-        var name = trackable.Tracked.GetType().Name;
-        var wasAdded = _tracked.Add(trackable);
+        string name = trackable.Tracked.GetType().Name;
+        bool wasAdded = _tracked.Add(trackable);
         if (wasAdded is false)
         {
             _logger.LogError("Domain object {Object} already added to tracking [id={Id}]", name, trackable.Tracked.Id);
