@@ -16,7 +16,7 @@ public static class MessagingExtensions
     //TODO validate settings
     //TODO make obsolete and find alternative for rpi (rabbitmq in docker)
 
-    public static void AddMessaging(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
     {
         var memphisOptions = configuration.GetSection(MessagingConsts.MemphisSection).Get<MemphisOptions>();
 
@@ -33,9 +33,11 @@ public static class MessagingExtensions
         services.AddSingleton<IMessagePublisher, MemphisMessagePublisher>();
         services.AddSingleton<IMessageSubscriber, MemphisMessageSubscriber>();
         services.AddSingleton<IMemphisProducerProvider, MemphisProducerProvider>();
+
+        return services;
     }
 
-    //TODO validate if jobs are added, as outbox requires them 
+    //TODO validate if jobs are added, as outbox requires them
     public static IServiceCollection AddOutbox(this IServiceCollection services)
     {
         services.AddSingleton<IDomainObjectConverter<Outbox.Models.Outbox, OutboxEntity>, OutboxConverter>();

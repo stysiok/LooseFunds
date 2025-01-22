@@ -4,7 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-LooseFunds.Notifier.EntryPoint-16631422-b272-4d51-880a-a73f3f77161a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LooseFunds.Notifier.Application\LooseFunds.Notifier.Application.csproj"/>
+    <ProjectReference Include="..\..\shared\LooseFunds.Shared.Toolbox\LooseFunds.Shared.Toolbox.csproj"/>
+    <ProjectReference Include="..\LooseFunds.Processor.Application\LooseFunds.Processor.Application.csproj"/>
   </ItemGroup>
 </Project>

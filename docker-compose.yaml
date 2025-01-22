@@ -14,7 +14,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres:/var/lib/postgresql/data
-        
+
   postgres-gui:
     image: dpage/pgadmin4:latest
     container_name: postgres-gui
@@ -24,13 +24,13 @@ services:
     ports:
       - "2345:80"
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admi
+      - PGADMIN_DEFAULT_EMAIL=ad@min.ad
       - PGADMIN_DEFAULT_PASSWORD=password
     networks:
       - loose-funds
     volumes:
       - pg_admin:/var/lib/pgadmin
-    
+
   seq:
     image: datalust/seq:latest
     container_name: seq
