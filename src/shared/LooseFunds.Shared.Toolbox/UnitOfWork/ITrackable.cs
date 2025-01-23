@@ -5,6 +5,6 @@ namespace LooseFunds.Shared.Toolbox.UnitOfWork;
 
 internal interface ITrackable
 {
-    DomainObject Tracked { get; }
+    DomainObject Instance { get; }
     DocumentEntity Convert();
 }

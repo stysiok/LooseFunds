@@ -16,13 +16,12 @@ builder.Services
     .AddUnitOfWork()
     .AddMartenStorage(builder.Configuration, builder.Environment)
     .AddMessaging(builder.Configuration);
-    
+
 
 builder.Host.UseLogging(builder.Configuration);
 
 var app = builder.Build();
 
 await app.ScheduleJobAsync<StartDailyInvestmentJob>(b => b.RepeatForever().WithIntervalInHours(24));
-await app.ScheduleOutboxJob();
 
 app.Run();

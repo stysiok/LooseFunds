@@ -1,11 +1,9 @@
 using LooseFunds.Shared.Toolbox.Core.Converters;
-using LooseFunds.Shared.Toolbox.Jobs;
 using LooseFunds.Shared.Toolbox.Messaging.Memphis;
 using LooseFunds.Shared.Toolbox.Messaging.Outbox;
 using LooseFunds.Shared.Toolbox.Messaging.Outbox.Converters;
 using LooseFunds.Shared.Toolbox.Messaging.Outbox.Models;
 using Memphis.Client;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -43,14 +41,13 @@ public static class MessagingExtensions
         services.AddSingleton<IDomainObjectConverter<Outbox.Models.Outbox, OutboxEntity>, OutboxConverter>();
         services.AddSingleton<IEntityObjectConverter<OutboxEntity, Outbox.Models.Outbox>, OutboxConverter>();
 
-        services.AddJob<OutboxProcessor>();
+        services.AddScoped<IOutboxProcessor, OutboxProcessor>();
 
         services.AddScoped<IOutboxRepository, OutboxRepository>();
-        services.AddScoped<IOutboxStore, OutboxRepository>();
 
         return services;
     }
 
-    public static Task ScheduleOutboxJob(this WebApplication webApplication)
-        => webApplication.ScheduleJobAsync<OutboxProcessor>(b => b.WithIntervalInSeconds(30).RepeatForever());
+    // public static Task ScheduleOutboxJob(this WebApplication webApplication)
+    //     => webApplication.ScheduleJobAsync<OutboxProcessor>(b => b.WithIntervalInSeconds(30).RepeatForever());
 }

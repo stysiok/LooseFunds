@@ -23,7 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddKrakenAdapter(builder.Configuration, builder.Environment);
 builder.Services.AddCorrelationLogEnricher();
-builder.Services.AddUnitOfWork();
+builder.Services.AddDomainUnitOfWork();
 builder.Services.AddMartenStorage(builder.Configuration, builder.Environment);
 builder.Services.AddMediatR(typeof(ApplicationExtensions).Assembly);
 builder.Services.AddApplication();

@@ -9,6 +9,6 @@ internal sealed record Trackable<TDomain, TEntity>(
     IDomainObjectConverter<TDomain, TEntity> Converter)
     : ITrackable where TDomain : DomainObject where TEntity : DocumentEntity
 {
-    public DomainObject Tracked => DomainObject;
+    public DomainObject Instance => DomainObject;
     public DocumentEntity Convert() => Converter.ToDocumentEntity(DomainObject);
 }

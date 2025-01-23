@@ -1,6 +1,5 @@
 using System.Text.Json;
 using LooseFunds.Shared.Toolbox.Core.Converters;
-using LooseFunds.Shared.Toolbox.Core.Domain;
 using LooseFunds.Shared.Toolbox.Messaging.Outbox.Models;
 
 namespace LooseFunds.Shared.Toolbox.Messaging.Outbox.Converters;
@@ -21,11 +20,6 @@ internal sealed class OutboxConverter : IDomainObjectConverter<Models.Outbox, Ou
         };
 
     public Models.Outbox ToDomainObject(OutboxEntity entity)
-    {
-        var message =
-            JsonSerializer.Deserialize<IntegrationEvent>(entity.Message) ??
-            throw new Exception(); //TODO custom exception
-        return Models.Outbox.Restore(entity.Id, entity.Status, message, entity.Recipient, entity.CreatedAt,
-            entity.UpdatedAt);
-    }
+        => Models.Outbox.Restore(entity.Id, entity.Status, entity.Type, entity.Message, entity.Recipient,
+            entity.CreatedAt, entity.UpdatedAt);
 }

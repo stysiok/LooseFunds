@@ -8,12 +8,12 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 builder.Services
     .AddLogging(builder.Configuration, builder.Environment)
+    .AddMessaging(builder.Configuration)
     .AddUnitOfWork()
     .AddOutbox()
     .AddMartenStorage(builder.Configuration, builder.Environment)
     .AddHostedService<OutboxWorker>();
 
 IHost host = builder.Build();
-
 
 host.Run();

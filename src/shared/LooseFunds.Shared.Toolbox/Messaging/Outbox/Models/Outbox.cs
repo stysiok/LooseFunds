@@ -9,34 +9,44 @@ internal sealed class Outbox : DomainObject
 {
     public Status Status { get; private set; }
     public string Message { get; }
-    public Type Type { get; }
+    public string Type { get; }
     public DateTime CreatedAt { get; }
     public DateTime UpdatedAt { get; } //TODO is it needed
     public Recipient Recipient { get; }
 
-    private Outbox(Guid id, Status status, IntegrationEvent message, Recipient recipient, DateTime createdAt,
-        DateTime updatedAt) : base(id)
+    private Outbox(Guid id, Status status, Recipient recipient, DateTime createdAt, DateTime updatedAt) : base(id)
     {
         Status = status;
-        Type = message.GetType();
         Recipient = recipient;
-        Message = JsonSerializer.Serialize(message, message.GetType());
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
 
-    public static IEnumerable<Outbox> Create(IntegrationEvent integrationEvent)
+    private Outbox(Guid id, Status status, IntegrationEvent message, Recipient recipient, DateTime createdAt,
+        DateTime updatedAt) : this(id, status, recipient, createdAt, updatedAt)
+    {
+        Type = message.GetType().Name;
+        Message = JsonSerializer.Serialize(message, message.GetType());
+    }
+
+    private Outbox(Guid id, Status status, string type, string message, Recipient recipient, DateTime createdAt,
+        DateTime updatedAt) : this(id, status, recipient, createdAt, updatedAt)
+    {
+        Type = type;
+        Message = message;
+    }
+
+    internal static IEnumerable<Outbox> Create(IntegrationEvent integrationEvent)
     {
         var now = DateTime.UtcNow;
         return integrationEvent.Recipients
             .Select(recipient => new Outbox(Guid.NewGuid(), Status.Pending, integrationEvent, recipient, now, now));
     }
 
-    public static Outbox Restore(Guid id, Status status, IntegrationEvent message, Recipient recipient,
-        DateTime createdAt,
-        DateTime updatedAt) => new(id, status, message, recipient, createdAt, updatedAt);
+    internal static Outbox Restore(Guid id, Status status, string type, string message, Recipient recipient,
+        DateTime createdAt, DateTime updatedAt) => new(id, status, type, message, recipient, createdAt, updatedAt);
 
-    public void MarkAsSent()
+    internal void MarkAsSent()
     {
         //TODO validate state
         Status = Status.Sent;

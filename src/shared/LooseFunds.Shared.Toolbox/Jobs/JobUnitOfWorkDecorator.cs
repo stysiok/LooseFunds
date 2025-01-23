@@ -17,6 +17,6 @@ internal sealed class JobUnitOfWorkDecorator : IJob
     public async Task Execute(IJobExecutionContext context)
     {
         await _job.Execute(context);
-        await _unitOfWork.CommitAsync();
+        await _unitOfWork.CommitAsync(context.CancellationToken);
     }
 }
