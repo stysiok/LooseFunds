@@ -9,19 +9,26 @@ using Microsoft.Extensions.Logging;
 
 namespace LooseFunds.Shared.Toolbox.Messaging.Outbox;
 
-internal sealed class OutboxRepository : RepositoryBase<Models.Outbox, OutboxEntity>, IOutboxRepository
+internal sealed class OutboxRepository : RepositoryBase<Models.Outbox, OutboxEntity>, IOutboxRepository, IOutboxStore
 {
+    private readonly IUnitOfWork _unitOfWork;
+
     public OutboxRepository(IQuerySession querySession,
         IDomainObjectConverter<Models.Outbox, OutboxEntity> domainConverter,
         IEntityObjectConverter<OutboxEntity, Models.Outbox> entityConverter, IUnitOfWork unitOfWork,
         ILogger<OutboxRepository> logger) : base(querySession, domainConverter, entityConverter, unitOfWork, logger)
     {
+        _unitOfWork = unitOfWork;
     }
 
-    public void Add(IntegrationEvent integrationEvent)
+    public async Task AddAsync(IntegrationEvent integrationEvent, CancellationToken cancellationToken)
     {
-        var outboxes = Models.Outbox.Create(integrationEvent);
-        foreach (var outbox in outboxes) Track(outbox);
+        foreach (Models.Outbox outbox in Models.Outbox.Create(integrationEvent))
+        {
+            Track(outbox);
+        }
+
+        await _unitOfWork.CommitAsync(cancellationToken);
     }
 
     public void Add(Models.Outbox outbox) => Track(outbox);

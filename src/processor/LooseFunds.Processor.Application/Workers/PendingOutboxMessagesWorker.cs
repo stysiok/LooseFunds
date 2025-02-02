@@ -5,13 +5,13 @@ using Microsoft.Extensions.Logging;
 
 namespace LooseFunds.Processor.Application.Workers;
 
-public sealed class OutboxWorker : BackgroundService
+public sealed class PendingOutboxMessagesWorker : BackgroundService
 {
-    private const int DELAY = 10;
+    private const int DELAY_IN_S = 10;
     private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<OutboxWorker> _logger;
+    private readonly ILogger<PendingOutboxMessagesWorker> _logger;
 
-    public OutboxWorker(IServiceProvider serviceProvider, ILogger<OutboxWorker> logger)
+    public PendingOutboxMessagesWorker(IServiceProvider serviceProvider, ILogger<PendingOutboxMessagesWorker> logger)
     {
         _serviceProvider = serviceProvider;
         _logger = logger;
@@ -25,8 +25,10 @@ public sealed class OutboxWorker : BackgroundService
             IOutboxProcessor processor = scope.ServiceProvider.GetRequiredService<IOutboxProcessor>();
 
             await processor.SendPendingAsync(stoppingToken);
+            TimeSpan delay = TimeSpan.FromSeconds(DELAY_IN_S);
 
-            await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
+            _logger.LogDebug("Finished execution [next_run_at={Next}]", DateTime.UtcNow.Add(delay));
+            await Task.Delay(delay, stoppingToken);
         }
     }
 }

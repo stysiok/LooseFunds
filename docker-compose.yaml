@@ -44,6 +44,19 @@ services:
     volumes:
       - seq:/data
 
+  rabbit-mq:
+    image: masstransit/rabbitmq
+    container_name: rabbit-mq
+    restart: unless-stopped
+    networks:
+      - loose-funds
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - rabbit-mq:/var/lib/rabbitmq/
+      - rabbit-mq:/var/log/rabbitmq/
+
 networks:
   loose-funds:
 
@@ -51,5 +64,6 @@ volumes:
   postgres:
   seq:
   pg_admin:
+  rabbit-mq:
 
 

@@ -9,16 +9,16 @@ internal sealed class OutboxProcessor : IOutboxProcessor
     private readonly IOutboxRepository _outboxRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    // private readonly IMessagePublisher _messagePublisher;
+    private readonly IMessagePublisher _messagePublisher;
     private readonly ILogger<OutboxProcessor> _logger;
 
     public OutboxProcessor(IOutboxRepository outboxRepository,
-        IUnitOfWork unitOfWork, //IMessagePublisher messagePublisher,
+        IUnitOfWork unitOfWork, IMessagePublisher messagePublisher,
         ILogger<OutboxProcessor> logger)
     {
         _outboxRepository = outboxRepository;
         _unitOfWork = unitOfWork;
-        // _messagePublisher = messagePublisher;
+        _messagePublisher = messagePublisher;
         _logger = logger;
     }
 
@@ -30,7 +30,7 @@ internal sealed class OutboxProcessor : IOutboxProcessor
         foreach (var outbox in pending)
         {
             var message = outbox.ToPublishMessage();
-            // await _messagePublisher.PublishAsync(message, cancellationToken);
+            await _messagePublisher.PublishAsync(message, cancellationToken);
             outbox.MarkAsSent();
             _outboxRepository.Add(outbox);
         }

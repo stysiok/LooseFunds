@@ -1,6 +1,7 @@
 using LooseFunds.Processor.Application.Workers;
 using LooseFunds.Shared.Toolbox.Logging;
 using LooseFunds.Shared.Toolbox.Messaging;
+using LooseFunds.Shared.Toolbox.Messaging.Outbox;
 using LooseFunds.Shared.Toolbox.Storage.Marten;
 using LooseFunds.Shared.Toolbox.UnitOfWork;
 
@@ -12,7 +13,7 @@ builder.Services
     .AddUnitOfWork()
     .AddOutbox()
     .AddMartenStorage(builder.Configuration, builder.Environment)
-    .AddHostedService<OutboxWorker>();
+    .AddHostedService<PendingOutboxMessagesWorker>();
 
 IHost host = builder.Build();
 
