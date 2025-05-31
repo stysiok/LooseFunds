@@ -1,6 +1,8 @@
 using LooseFunds.Planner.Api.Workers;
 using LooseFunds.Shared.Toolbox.Logging;
 using LooseFunds.Shared.Toolbox.Messaging;
+using LooseFunds.Shared.Toolbox.Messaging.Outbox;
+using LooseFunds.Shared.Toolbox.Storage.Marten;
 using LooseFunds.Shared.Toolbox.UnitOfWork;
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
