@@ -74,3 +74,5 @@ app.MapGet("/uow",
         await mediator.Publish(new CreateInvestment(), cancellationToken));
 
 app.Run();
+
+public partial class Program;

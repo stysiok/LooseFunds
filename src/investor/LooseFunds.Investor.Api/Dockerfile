@@ -1,9 +1,9 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 as build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 as build
 WORKDIR /app
 COPY . .
 RUN dotnet publish src/investor/LooseFunds.Investor.Api -c release -o out
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 as app
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 as app
 WORKDIR /app
 COPY --from=build /app/out .
 ENV ASPNETCORE_URLS=http://*:80
